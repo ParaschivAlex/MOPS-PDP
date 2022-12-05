@@ -23,6 +23,8 @@ namespace PDP.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
+                 PDP.Migrations.Configuration>("DefaultConnection"));
         }
 
         public static ApplicationDbContext Create()
