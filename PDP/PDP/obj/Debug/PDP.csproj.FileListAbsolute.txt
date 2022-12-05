@@ -103,3 +103,5 @@ D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.csproj.CoreCompileInputs.cache
 D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.csproj.CopyComplete
 D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.dll
 D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.pdb
+D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.Migrations.Initial.resources
+D:\mops-tdd\MOPS-PDP\PDP\PDP\obj\Debug\PDP.csproj.GenerateResource.cache
