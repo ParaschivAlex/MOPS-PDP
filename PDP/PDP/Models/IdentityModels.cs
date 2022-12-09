@@ -27,6 +27,8 @@ namespace PDP.Models
                  PDP.Migrations.Configuration>("DefaultConnection"));
         }
 
+        public DbSet<Doctor> Doctors { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
