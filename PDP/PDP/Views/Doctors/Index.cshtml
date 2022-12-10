@@ -84,6 +84,7 @@
                 <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
                 <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
                 <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+                <a class="card-footer" href="/Consultations/Create/@doctor.DoctorID">Add Consultation</a>
             </div>
         </div>
     }

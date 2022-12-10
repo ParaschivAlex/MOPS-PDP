@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using PDP.Models;
 
 namespace PDP.Controllers
@@ -18,8 +20,18 @@ namespace PDP.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            return View(db.Specializations.ToList());
+            string userId = User.Identity.GetUserId();
+
+            return View(db.Consultations.Where(t => t.user.Id == userId));
         }
+
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create(int id)
+        {
+            return View(id);
+        }
+
 
     }
 }
