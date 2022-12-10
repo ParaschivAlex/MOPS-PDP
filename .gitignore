@@ -8,3 +8,5 @@
 /PDP/PDP/bin
 /PDP/PDP/bin/PDP.pdb
 /PDP/PDP.Tests/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/PDP/PDP.Tests/bin/Debug
+/PDP/PDP.Tests/obj/Debug/PDP.Tests.csproj.CoreCompileInputs.cache
