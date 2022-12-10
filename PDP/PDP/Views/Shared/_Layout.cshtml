@@ -3,38 +3,38 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
+<style>
+body { background: linear-gradient( rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) ); background-image: url('https://img.freepik.com/free-vector/clean-medical-background-vector_53876-140865.jpg?w=1380&t=st=1670630315~exp=1670630915~hmac=0c94813e76a410487fc3362da95f04206fb45cd544817a337afe7c568f880908'); background-size: cover; background-attachment: fixed; background-position: center; }
+</style>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="float:left">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <img type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" src="https://www.flaticon.com/svg/vstatic/svg/3917/3917215.svg?token=exp=1670632048~hmac=f0c2e5740c93b7da1b3d14286f72720d" style="height:1.5em;"/>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Doctors", "Index", "Doctors")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Specializations", "Index", "Specializations")</li>
+                    }
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; PDP-Team</p>
         </footer>
     </div>
 

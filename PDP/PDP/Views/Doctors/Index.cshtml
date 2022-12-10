@@ -1,81 +1,50 @@
 ﻿@model IEnumerable<PDP.Models.Doctor>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Doctors";
 }
 
-<h2>Index</h2>
+<h2>All doctors</h2>
+<br />
 
-@{
-    if (User.IsInRole("Admin"))
+<a class="btn btn-primary" href="/Doctors/Create">Add a doctor</a>
+<br />
+
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+    @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
     {
-        <p>
-            @Html.ActionLink("Add New Doctor", "Create")
-        </p>
+        // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
+        PDP.Models.Specializations currentSpecialization = null;
+        foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+        {
+            if (doctor.SpecializationID == specialization.SpecializationID)
+            {
+                currentSpecialization = new PDP.Models.Specializations
+                {
+                    SpecializationID = specialization.SpecializationID,
+                    Price = specialization.Price,
+                    Name = specialization.Name
+                };
+                break;
+            }
+        }
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <hr />
+                <a href="/Doctors/Details/@doctor.DoctorID">
+                    <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                </a>
+                <div style="text-align:center">
+                    <a href="/Doctors/Details/@doctor.DoctorID">
+                        <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                    </a>
+                </div>
+                <br />
+                <!--TO DO: Add a way to calculate price in the next line, for specialization price call currentSpecialization.Price-->
+                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: --- RON</h6>
+                <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+            </div>
+        </div>
     }
-}
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SecondName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SpecializationID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceRate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SecondName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpecializationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAvailable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriceRate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Photo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.DoctorID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.DoctorID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.DoctorID })
-            </td>
-        </tr>
-    }
-
-</table>
+</div>

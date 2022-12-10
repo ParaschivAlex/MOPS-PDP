@@ -29,6 +29,8 @@ namespace PDP.Models
 
         public DbSet<Doctor> Doctors { get; set; }
 
+        public DbSet<Specializations> Specializations { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

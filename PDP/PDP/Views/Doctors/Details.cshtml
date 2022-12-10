@@ -1,82 +1,73 @@
 ﻿@model PDP.Models.Doctor
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Doctor Details";
 }
 
-<h2>Details</h2>
+<!--
+<br />
+<a class="btn btn-info" href="/Doctors/Index"><i class="fa fa-arrow-left"></i>  Return to the doctor list</a>
+<br />
+    -->
+<br />
+<hr />
 
-<div>
-    <h4>Doctor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+@{
+    // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
+    PDP.Models.Specializations currentSpecialization = null;
+    foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+    {
+        if (Model.SpecializationID == specialization.SpecializationID)
+        {
+            currentSpecialization = new PDP.Models.Specializations
+            {
+                SpecializationID = specialization.SpecializationID,
+                Price = specialization.Price,
+                Name = specialization.Name
+            };
+            break;
+        }
+    }
+    <div class="panel panel-defaul" style="text-align:center">
+        <div class="panel-body">
+            <h3 class="text-center text-primary">@Model.FirstName @Model.SecondName</h3>
+            <img class="img-responsive" src="@Model.Photo" alt="doctor's photo" style="height:16em; margin:auto;" />
+            <br />
+            <h6 style="font-style:italic">Contact number: @Model.PhoneNumber</h6>
+            <div style="text-align:center">
+                <!--TO DO: Add a way to calculate price in the next line, for specialization price call currentSpecialization.Price-->
+                <h6>Price for consultation: ---- RON</h6>
+                <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                <h6>Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None") </h6>
+            </div>
+            <!--Add a review zone-->
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SecondName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SecondName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SpecializationID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SpecializationID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PriceRate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PriceRate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DoctorID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-1">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-warning" href="/Doctors/Edit/@Model.DoctorID"><i class="fa fa-edit"></i>Edit</a>
+                    }
+                </div>
+                <div class="col-md-1">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorID }))
+                        {
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-trash"></i> Delete</button>
+                        }
+                    }
+                </div>
+                <div class="col-md-1">
+                    @if (User.IsInRole("User"))
+                    {
+                        <!--Schedule a consultation zone-->
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

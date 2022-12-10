@@ -19,13 +19,16 @@ namespace PDP.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
         {
-            return View(db.Doctors.ToList());
+            ViewBag.specializations = GetAllSpecializations();
+            ViewBag.doctors = db.Doctors.ToList();
+            return View();
         }
 
         // GET: Doctors/Details/5
         [Authorize(Roles = "User, Admin")]
         public ActionResult Details(int? id)
         {
+            ViewBag.specializations = GetAllSpecializations();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -42,6 +45,7 @@ namespace PDP.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
+            ViewBag.specializations = GetAllSpecializationsForSelect();
             return View();
         }
 
@@ -49,7 +53,7 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Rating")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +69,7 @@ namespace PDP.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
+            ViewBag.specializations = GetAllSpecializationsForSelect();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,7 +86,7 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Rating")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +94,7 @@ namespace PDP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(doctor);
+            return RedirectToAction("Index");
         }
 
         // GET: Doctors/Delete/5
@@ -118,6 +123,33 @@ namespace PDP.Controllers
             db.Doctors.Remove(doctor);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [NonAction]
+        public IEnumerable<Specializations> GetAllSpecializations()
+        {
+            var specs = from sp in db.Specializations
+                        select sp;
+            return specs;
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllSpecializationsForSelect()
+        {
+            var selectList = new List<SelectListItem>();
+
+            var specs = from sp in db.Specializations
+                        select sp;
+
+            foreach (var spec in specs)
+            {
+                selectList.Add(new SelectListItem
+                {
+                    Value = spec.SpecializationID.ToString(),
+                    Text = spec.Name.ToString()
+                });
+            }
+            return selectList;
         }
 
         protected override void Dispose(bool disposing)
