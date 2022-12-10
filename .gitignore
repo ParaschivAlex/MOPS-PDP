@@ -5,3 +5,6 @@
 /PDP/.vs/PDP
 /PDP/PDP/obj/Debug
 /PDP/PDP.Tests/obj/Debug
+/PDP/PDP/bin
+/PDP/PDP/bin/PDP.pdb
+/PDP/PDP.Tests/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
