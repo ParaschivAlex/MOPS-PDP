@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/PDP/.vs/PDP
+/PDP/PDP/obj/Debug
+/PDP/PDP.Tests/obj/Debug
