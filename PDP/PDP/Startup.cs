@@ -39,9 +39,25 @@ namespace PDP
             }
             if (!roleManager.RoleExists("User"))
             {
-                var role = new IdentityRole();
-                role.Name = "User";
+                var role = new IdentityRole
+                {
+                    Name = "User"
+                };
                 roleManager.Create(role);
+                var user = new ApplicationUser
+                {
+                    UserName = "user@gmail.com",
+                    Email = "user@gmail.com"
+                };
+                var userCreated = UserManager.Create(user, "!1User");
+                if (userCreated.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "User");
+                }
+
+                //var role = new IdentityRole();
+                //role.Name = "User";
+                //roleManager.Create(role);
             }
         }
     }

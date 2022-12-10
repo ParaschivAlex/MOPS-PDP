@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI;
 using PDP.Models;
 
 namespace PDP.Controllers
@@ -19,8 +20,83 @@ namespace PDP.Controllers
         [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
         {
+            ViewBag.selectedOption = -1;
+            ViewBag.searchString = "";
+            ViewBag.sortOption = "order-by-names";
+            if (Request.Params.Get("SelectOption") != null)
+            {
+                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SelectOption"));
+                ViewBag.selectedOption = Int32.Parse(Request.Params.Get("SelectOption"));
+            }
+            if (Request.Params.Get("SearchString") != null)
+            {
+                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SearchString"));
+                ViewBag.searchString = Request.Params.Get("SearchString");
+            }
+            if (Request.Params.Get("SortOption") != null)
+            {
+                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SortOption"));
+                ViewBag.sortOption = Request.Params.Get("SortOption");
+            }
             ViewBag.specializations = GetAllSpecializations();
-            ViewBag.doctors = db.Doctors.ToList();
+            ViewBag.doctors = new List<Doctor>();
+            // filter doctors
+            foreach (Doctor doctor in db.Doctors.ToList())
+            {
+                String searchText = doctor.FirstName.ToLowerInvariant() + doctor.SecondName.ToLowerInvariant();
+                foreach (Specializations specialization in ViewBag.specializations)
+                {
+                    if (doctor.SpecializationID == specialization.SpecializationID)
+                    {
+                        System.Diagnostics.Debug.WriteLine(Request.Params.Get("Founddd"));
+                        searchText += specialization.Name;
+                        break;
+                    }
+                }
+                System.Diagnostics.Debug.WriteLine(Request.Params.Get(searchText));
+                if (searchText.Contains(ViewBag.searchString.ToLowerInvariant()))
+                {
+                    if (ViewBag.selectedOption != -1)
+                    {
+                        if (ViewBag.selectedOption == doctor.SpecializationID)
+                        {                 
+                            ViewBag.doctors.Add(doctor);
+                        }
+                    } else
+                    { 
+                        ViewBag.doctors.Add(doctor);
+                    }
+                }
+            }
+            switch (ViewBag.sortOption)
+            {
+                case "order-by-names":
+                    ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
+                    {
+                        return x.FirstName.CompareTo(y.FirstName);
+                    });                
+                    break;
+                case "order-by-names-reverse":
+                    ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
+                    {
+                        return y.FirstName.CompareTo(x.FirstName);
+                    });
+                    break;
+                case "order-by-price":
+                    ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
+                    {
+                        // TODO: Change it to how we actually calculate the price of a doctor
+                        return x.PriceRate.CompareTo(y.PriceRate);
+                    });
+                    break;
+                case "order-by-price-reverse":
+                    ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
+                    {
+                        // TODO: Change it to how we actually calculate the price of a doctor
+                        return y.PriceRate.CompareTo(x.PriceRate);
+                    });
+                    break;
+            }
             return View();
         }
 
