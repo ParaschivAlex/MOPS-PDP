@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PDP.Models.Doctor>
+
+@{
+    ViewBag.Title = "Doctors";
+}
+
+<h2>All doctors</h2>
+<br />
+
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" href="/Doctors/Create">Add a doctor</a>
+    <br />
+}
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+        @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
+        {
+            // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
+            PDP.Models.Specializations currentSpecialization = null;
+            foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+            {
+                if (doctor.SpecializationID == specialization.SpecializationID)
+                {
+                    currentSpecialization = new PDP.Models.Specializations
+                    {
+                        SpecializationID = specialization.SpecializationID,
+                        Price = specialization.Price,
+                        Name = specialization.Name
+                    };
+                    break;
+                }
+            }
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <hr />
+                    <a href="/Doctors/Details/@doctor.DoctorID">
+                        <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                    </a>
+                    <div style="text-align:center">
+                        <a href="/Doctors/Details/@doctor.DoctorID">
+                            <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                        </a>
+                    </div>
+                    <br />
+                    <!--TO DO: Add a way to calculate price in the next line, for specialization price call currentSpecialization.Price-->
+                    <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: --- RON</h6>
+                    <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                    <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+                </div>
+            </div>
+        }
+    </div>
