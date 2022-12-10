@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace PDP.Models
 {
@@ -38,6 +39,8 @@ namespace PDP.Models
 
         // Calculated based on reviews
         public float Rating { get; set; }
+
+        public virtual ICollection<Consultation> Consultations { get; set; }
 
         // Calculates consultation price
         public float CalcultateConsultationPrice(Specializations specialization)
