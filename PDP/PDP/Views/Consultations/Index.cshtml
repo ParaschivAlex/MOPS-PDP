@@ -12,7 +12,7 @@
 <h2>Consultations available in the application</h2>
 <br />
 
-<a class="btn btn-primary" href="/Doctors/Create">Add consultation</a>
+<a class="btn btn-primary" href="/Doctors/Index">Add consultation</a>
 <hr />
 <br />
 
@@ -20,8 +20,8 @@
 {
     <div style="display: inline-block">
         <p> Doctor: @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
-        <p> Ziua: @consultation.date_day ; Ora: @consultation.slot_hour </p>
         <p> Pret: @consultation.price </p>
+        <p> @consultation.date_day.ToString("dd.mm.yyyy") : @consultation.slot_hour </p>
     </div>
     <div style="float: right; height: 100%">
         <a class="btn btn-success" href="/Consultations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>
