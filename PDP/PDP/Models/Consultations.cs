@@ -13,10 +13,11 @@ namespace PDP.Models
         public int ConsultationID { get; set; }
 
         [Required(ErrorMessage = "Please pick a start date!")]
-        DateTime startDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime startDate { get; set; }
 
         [Required(ErrorMessage = "Please pick an end date!")]
-        DateTime endDate { get; set; }
+        public DateTime endDate { get; set; }
 
         public double price { get; set; }
         public bool canceled { get; set; }

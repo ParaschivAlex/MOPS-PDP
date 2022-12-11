@@ -16,7 +16,7 @@ namespace PDP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Specializations
+        // GET: Consultations
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
@@ -25,8 +25,8 @@ namespace PDP.Controllers
             return View(db.Consultations.Where(t => t.user.Id == userId));
         }
 
-
-        [Authorize(Roles = "Admin")]
+        // GET: Consultations/Create/{DoctorId}
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Create(int id)
         {
             var doctor = db.Doctors.Find(id);
