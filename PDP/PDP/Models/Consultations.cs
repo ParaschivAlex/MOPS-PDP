@@ -17,11 +17,8 @@ namespace PDP.Models
         public DateTime date_day { get; set; }
 
         [Required(ErrorMessage = "Please select a slot!")]
-        [Range(0, 48, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
-        public int slot_hour { get; set; }
+        public string slot_hour { get; set; }
 
-        [Range(typeof(double), "0.01", "100000.00", ErrorMessage = "enter decimal value")]
-        [RegularExpression(@"^\[0-9]{1,6}\.[0-9]{2}$", ErrorMessage = "enter decimal value of format $9.99")]
         public double price { get; set; }
         public bool canceled { get; set; }
 

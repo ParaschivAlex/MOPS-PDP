@@ -12,7 +12,7 @@ using PDP.Models;
 
 namespace PDP.Controllers
 {
-    public class ConsultationsController : BaseController
+    public class ConsultationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

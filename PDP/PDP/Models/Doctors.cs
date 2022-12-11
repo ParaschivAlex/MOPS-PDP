@@ -23,10 +23,9 @@ namespace PDP.Models
         public bool IsAvailable { get; set; }
 
         [Required(ErrorMessage = "Please enter a price rate!")]
-        [Range(typeof(double), "0.01", "100.00", ErrorMessage = "enter decimal value")]
-        public double PriceRate { get; set; }
+        public float PriceRate { get; set; }
 
-        [MinLength(10), MaxLength(12)]
+        [MinLength(11), MaxLength(12)]
         [Required(ErrorMessage = "Please enter a phone number!")]
         public string PhoneNumber { get; set; }
 
@@ -44,7 +43,7 @@ namespace PDP.Models
         public virtual ICollection<Consultation> Consultations { get; set; }
 
         // Calculates consultation price
-        public double CalcultateConsultationPrice(Specializations specialization)
+        public float CalcultateConsultationPrice(Specializations specialization)
         {
             return specialization.Price * this.PriceRate;
         }

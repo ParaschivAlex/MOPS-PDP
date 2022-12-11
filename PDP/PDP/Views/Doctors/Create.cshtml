@@ -67,7 +67,7 @@
             <h6>Price rate</h6>
         </div>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.PriceRate, new { htmlAttributes = new { @class = "form-control", type = "number", step = "any", min = "0", max = "100", value = "1.0", lang="en-US" } })
+            @Html.EditorFor(model => model.PriceRate, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PriceRate, "", new { @class = "text-danger" })
         </div>
     </div>

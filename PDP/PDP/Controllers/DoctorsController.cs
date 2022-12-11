@@ -12,7 +12,7 @@ using PDP.Models;
 
 namespace PDP.Controllers
 {
-    public class DoctorsController : BaseController
+    public class DoctorsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -86,8 +86,8 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        double xPrice = 0;
-                        double yPrice = 0;
+                        float xPrice = 0;
+                        float yPrice = 0;
                         foreach (Specializations specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
@@ -108,8 +108,8 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        double xPrice = 0;
-                        double yPrice = 0;
+                        float xPrice = 0;
+                        float yPrice = 0;
                         foreach (Specializations specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
@@ -168,7 +168,6 @@ namespace PDP.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.specializations = GetAllSpecializationsForSelect();
             return View(doctor);
         }
 
