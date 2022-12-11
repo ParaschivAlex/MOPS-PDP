@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PDP.Models.Consultation>
+﻿@model List<PDP.Models.Consultation>
 
 
 @if (TempData.ContainsKey("message"))
@@ -19,7 +19,8 @@
 @foreach (var consultation in Model)
 {
     <div style="display: inline-block">
-        <h3>@consultation.DoctorId</h3>
+        <p> @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
+        <p> @consultation.date_day : @consultation.slot_hour </p>
     </div>
     <div style="float: right; height: 100%">
         <a class="btn btn-success" href="/Specializations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>

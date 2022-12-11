@@ -22,7 +22,9 @@ namespace PDP.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            return View(db.Consultations.Where(t => t.User.Id == userId));
+            IEnumerable<PDP.Models.Consultation> aux = db.Consultations.Where(t => t.User.Id == userId);
+            List<Consultation> consultations = aux.ToList();
+            return View(consultations);
         }
 
         // GET: Consultations/Create/{DoctorId}
@@ -61,6 +63,7 @@ namespace PDP.Controllers
 
             throw new Exception("INVALID");
         }
+
 
     }
 }
