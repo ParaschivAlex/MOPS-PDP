@@ -4,12 +4,7 @@
     ViewBag.Title = "Doctor Details";
 }
 
-<!--
-<br />
-<a class="btn btn-info" href="/Doctors/Index"><i class="fa fa-arrow-left"></i>  Return to the doctor list</a>
-<br />
-    -->
-<br />
+<h3>Doctor's details page</h3>
 <hr />
 
 @{
@@ -35,8 +30,7 @@
             <br />
             <h6 style="font-style:italic">Contact number: @Model.PhoneNumber</h6>
             <div style="text-align:center">
-                <!--TO DO: Add a way to calculate price in the next line, for specialization price call currentSpecialization.Price-->
-                <h6>Price for consultation: ---- RON</h6>
+                <h6>Price for consultation: @Model.CalcultateConsultationPrice(currentSpecialization)  RON</h6>
                 <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
                 <h6>Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None") </h6>
             </div>

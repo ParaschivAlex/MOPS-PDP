@@ -38,5 +38,11 @@ namespace PDP.Models
 
         // Calculated based on reviews
         public float Rating { get; set; }
+
+        // Calculates consultation price
+        public float CalcultateConsultationPrice(Specializations specialization)
+        {
+            return specialization.Price * this.PriceRate;
+        }
     }
 }
