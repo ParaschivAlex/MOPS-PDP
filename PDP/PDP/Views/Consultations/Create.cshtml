@@ -24,7 +24,7 @@
         <h6>Date</h6>
     </div>
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.date_day, "{0:dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "dd.mm.yyyy" })
+        @Html.TextBoxFor(model => model.date_day, "{dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "dd.mm.yyyy" })
         @Html.ValidationMessageFor(model => model.date_day, "", new { @class = "text-danger" })
     </div>
 
