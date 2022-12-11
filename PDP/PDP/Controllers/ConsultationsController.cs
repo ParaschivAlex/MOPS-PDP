@@ -35,6 +35,7 @@ namespace PDP.Controllers
             Consultation consultation = new Consultation();
             consultation.Doctor = doctor;
             consultation.DoctorId = doctor.DoctorId;
+            consultation.price = doctor.CalcultateConsultationPrice(db.Specializations.Find(doctor.SpecializationID));
 
             string userId = User.Identity.GetUserId();
             consultation.User = db.Users.Single(t => t.Id == userId);
