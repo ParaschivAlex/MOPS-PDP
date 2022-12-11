@@ -2,11 +2,8 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/PDP/.vs/PDP
-/PDP/PDP/obj/Debug
-/PDP/PDP.Tests/obj/Debug
-/PDP/PDP/bin
-/PDP/PDP/bin/PDP.pdb
-/PDP/PDP.Tests/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/PDP/PDP.Tests/bin/Debug
-/PDP/PDP.Tests/obj/Debug/PDP.Tests.csproj.CoreCompileInputs.cache
+/PDP/.vs/*
+/PDP/PDP/obj/*
+/PDP/PDP/bin/*
+/PDP/PDP.Tests/obj/*
+/PDP/PDP.Tests/bin/*
