@@ -10,7 +10,7 @@ using PDP.Models;
 
 namespace PDP.Controllers
 {
-    public class SpecializationsController : Controller
+    public class SpecializationsController : BaseController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

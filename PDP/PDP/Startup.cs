@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using System.Globalization;
+using System.Threading;
 
 [assembly: OwinStartupAttribute(typeof(PDP.Startup))]
 namespace PDP
@@ -11,6 +13,9 @@ namespace PDP
     {
         public void Configuration(IAppBuilder app)
         {
+            var cultureInfo = CultureInfo.GetCultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
             ConfigureAuth(app);
             CreateAdminUserAndApplicationRoles();
         }

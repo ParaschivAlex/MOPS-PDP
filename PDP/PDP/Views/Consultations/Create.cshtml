@@ -34,10 +34,11 @@
         <h6>Pick a slot</h6>
     </div>
 
-    <p>9:00 @Html.RadioButtonFor(m => m.slot_hour, "9:00")</p>
-    <p>9:30 @Html.RadioButtonFor(m => m.slot_hour, "9:30")</p>
-    <p>10:00 @Html.RadioButtonFor(m => m.slot_hour, "10:00")</p>
-    <p>10:30 @Html.RadioButtonFor(m => m.slot_hour, "10:30") </p>
+    @for (int i = 0; i <= 48; i++)
+    {
+        <p>@(i/2) : @(i%2==0 ? 00 : 11) @Html.RadioButtonFor(m => m.slot_hour, i)</p>
+
+    }
     @Html.ValidationMessageFor(m => m.slot_hour, "", new { @class = "text-danger" })
 
     @Html.HiddenFor(m => m.ConsultationID, @Model.ConsultationID)
