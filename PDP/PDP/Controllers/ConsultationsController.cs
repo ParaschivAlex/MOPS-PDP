@@ -29,7 +29,10 @@ namespace PDP.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create(int id)
         {
-            return View(id);
+            var doctor = db.Doctors.Find(id);
+            ViewBag.firstName = doctor.FirstName;
+            ViewBag.secondName = doctor.SecondName;
+            return View();
         }
 
 
