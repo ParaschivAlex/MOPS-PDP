@@ -72,11 +72,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <hr />
-                <a href="/Doctors/Details/@doctor.DoctorID">
+                <a href="/Doctors/Details/@doctor.DoctorId">
                     <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
                 </a>
                 <div style="text-align:center">
-                    <a href="/Doctors/Details/@doctor.DoctorID">
+                    <a href="/Doctors/Details/@doctor.DoctorId">
                         <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
                     </a>
                 </div>
@@ -84,6 +84,7 @@
                 <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
                 <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
                 <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+                <a class="card-footer" href="/Consultations/Create/@doctor.DoctorId">Add Consultation</a>
             </div>
         </div>
     }

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,9 @@ namespace PDP.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<Consultation> Consultations { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -30,6 +34,8 @@ namespace PDP.Models
         public DbSet<Doctor> Doctors { get; set; }
 
         public DbSet<Specializations> Specializations { get; set; }
+
+        public DbSet<Consultation> Consultations { get; set; }
 
         public static ApplicationDbContext Create()
         {

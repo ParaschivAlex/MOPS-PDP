@@ -1,12 +1,13 @@
 ﻿using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace PDP.Models
 {
     public class Doctor
     {
         [Key]
-        public int DoctorID { get; set; }
+        public int DoctorId { get; set; }
 
         [Required(ErrorMessage = "Please enter a first name!")]
         public string FirstName { get; set; }
@@ -38,6 +39,8 @@ namespace PDP.Models
 
         // Calculated based on reviews
         public float Rating { get; set; }
+
+        public virtual ICollection<Consultation> Consultations { get; set; }
 
         // Calculates consultation price
         public float CalcultateConsultationPrice(Specializations specialization)
