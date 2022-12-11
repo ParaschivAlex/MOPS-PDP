@@ -81,8 +81,7 @@
                     </a>
                 </div>
                 <br />
-                <!--TO DO: Add a way to calculate price in the next line, for specialization price call currentSpecialization.Price-->
-                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: --- RON</h6>
+                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
                 <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
                 <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
             </div>

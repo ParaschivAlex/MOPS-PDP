@@ -86,14 +86,44 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        return x.PriceRate.CompareTo(y.PriceRate);
+                        float xPrice = 0;
+                        float yPrice = 0;
+                        foreach (Specializations specialization in ViewBag.specializations)
+                        {
+                            if (x.SpecializationID == specialization.SpecializationID)
+                            {
+                                xPrice = specialization.Price;
+                            }
+                            if (y.SpecializationID == specialization.SpecializationID)
+                            {
+                                yPrice = specialization.Price;
+                            }
+                        }
+                        xPrice *= x.PriceRate;
+                        yPrice *= y.PriceRate;
+                        return xPrice.CompareTo(yPrice);
                     });
                     break;
                 case "order-by-price-reverse":
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        return y.PriceRate.CompareTo(x.PriceRate);
+                        float xPrice = 0;
+                        float yPrice = 0;
+                        foreach (Specializations specialization in ViewBag.specializations)
+                        {
+                            if (x.SpecializationID == specialization.SpecializationID)
+                            {
+                                xPrice = specialization.Price;
+                            }
+                            if (y.SpecializationID == specialization.SpecializationID)
+                            {
+                                yPrice = specialization.Price;
+                            }
+                        }
+                        xPrice *= x.PriceRate;
+                        yPrice *= y.PriceRate;
+                        return yPrice.CompareTo(xPrice);
                     });
                     break;
             }
