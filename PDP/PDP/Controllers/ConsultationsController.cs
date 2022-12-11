@@ -17,7 +17,7 @@ namespace PDP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Consultations
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
