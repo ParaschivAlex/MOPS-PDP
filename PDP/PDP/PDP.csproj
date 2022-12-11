@@ -367,6 +367,8 @@
     <Content Include="Views\Specializations\Index.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
+    <Content Include="Views\Consultations\Delete.cshtml" />
+    <Content Include="Views\Consultations\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -64,6 +64,70 @@ namespace PDP.Controllers
             throw new Exception("INVALID");
         }
 
+        // GET: Consulation/Edit/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Consultation consulations = db.Consultations.Find(id);
+            if (consulations == null)
+            {
+                return HttpNotFound();
+            }
+            return View(consulations);
+        }
+
+        // POST: Consulations/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(Consultation consultation)
+        {
+            consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
+            consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(consultation).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(consultation);
+        }
+
+
+        // GET: Consultations/Delete/5
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Consultation consultation = db.Consultations.Find(id);
+            if (consultation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(consultation);
+        }
+
+
+        // POST: Consultations/Delete/{ConsultationID}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Consultation consultation = db.Consultations.Find(id);
+            db.Consultations.Remove(consultation);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
 
     }
 }
