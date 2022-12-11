@@ -42,13 +42,13 @@
                 <div class="col-md-1">
                     @if (User.IsInRole("Admin"))
                     {
-                        <a class="btn btn-warning" href="/Doctors/Edit/@Model.DoctorID"><i class="fa fa-edit"></i>Edit</a>
+                        <a class="btn btn-warning" href="/Doctors/Edit/@Model.DoctorId"><i class="fa fa-edit"></i>Edit</a>
                     }
                 </div>
                 <div class="col-md-1">
                     @if (User.IsInRole("Admin"))
                     {
-                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorID }))
+                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorId }))
                         {
                             @Html.HttpMethodOverride(HttpVerbs.Delete)
                             <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-trash"></i> Delete</button>

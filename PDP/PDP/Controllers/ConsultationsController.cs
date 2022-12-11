@@ -22,7 +22,7 @@ namespace PDP.Controllers
         {
             string userId = User.Identity.GetUserId();
 
-            return View(db.Consultations.Where(t => t.user.Id == userId));
+            return View(db.Consultations.Where(t => t.User.Id == userId));
         }
 
         // GET: Consultations/Create/{DoctorId}
@@ -30,9 +30,15 @@ namespace PDP.Controllers
         public ActionResult Create(int id)
         {
             var doctor = db.Doctors.Find(id);
-            ViewBag.firstName = doctor.FirstName;
-            ViewBag.secondName = doctor.SecondName;
-            return View();
+            Consultation consultation = new Consultation();
+            consultation.Doctor = doctor;
+            consultation.DoctorId = doctor.DoctorId;
+
+            string userId = User.Identity.GetUserId();
+            consultation.User = db.Users.Single(t => t.Id == userId);
+            consultation.UserId = userId;
+
+            return View(consultation);
         }
 
 
@@ -40,16 +46,20 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
-        public ActionResult Create([Bind(Include = "ConsultationID,date_day,slot_hour,price,canceled,Doctor,user")] Consultation consultation)
+        public ActionResult Create(Consultation consultation)
         {
+            consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
+            consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
+
             if (ModelState.IsValid)
             {
+                consultation.canceled = true;
                 db.Consultations.Add(consultation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(consultation);
+            throw new Exception("INVALID");
         }
 
     }

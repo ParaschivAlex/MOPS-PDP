@@ -159,7 +159,7 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorId,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -192,7 +192,7 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "DoctorID,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "DoctorId,FirstName,SecondName,SpecializationID,IsAvailable,PriceRate,PhoneNumber,Photo,Email")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {

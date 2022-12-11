@@ -1,4 +1,7 @@
-﻿@if (TempData.ContainsKey("message"))
+﻿@model IEnumerable<PDP.Models.Consultation>
+
+
+@if (TempData.ContainsKey("message"))
 {
     <h1>@ViewBag.message</h1>
 }
@@ -9,19 +12,18 @@
 <h2>Consultations available in the application</h2>
 <br />
 
-<a class="btn btn-primary" href="/Doctors/Index">Add consultation</a>
+<a class="btn btn-primary" href="/Doctors/Create">Add consultation</a>
 <hr />
 <br />
 
-@foreach (var specialization in Model)
+@foreach (var consultation in Model)
 {
     <div style="display: inline-block">
-        <h3>@specialization.Name</h3>
-        <h6>Base price: @specialization.Price</h6>
+        <h3>@consultation.DoctorId</h3>
     </div>
     <div style="float: right; height: 100%">
-        <a class="btn btn-success" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-        <a class="btn btn-danger" href="/Specializations/Delete/@specialization.SpecializationID" style="display: inline-block;">Delete</a>
+        <a class="btn btn-success" href="/Specializations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>
+        <a class="btn btn-danger" href="/Specializations/Delete/@consultation.ConsultationID" style="display: inline-block;">Delete</a>
     </div>
     <br />
     <hr />

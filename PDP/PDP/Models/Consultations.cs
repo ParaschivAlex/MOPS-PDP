@@ -22,8 +22,12 @@ namespace PDP.Models
         public double price { get; set; }
         public bool canceled { get; set; }
 
+        [Required]
+        public int DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
-        public virtual ApplicationUser user { get; set; }
 
+        [Required]
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

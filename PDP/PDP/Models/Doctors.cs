@@ -7,7 +7,7 @@ namespace PDP.Models
     public class Doctor
     {
         [Key]
-        public int DoctorID { get; set; }
+        public int DoctorId { get; set; }
 
         [Required(ErrorMessage = "Please enter a first name!")]
         public string FirstName { get; set; }

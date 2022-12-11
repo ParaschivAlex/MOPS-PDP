@@ -193,10 +193,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-PDP-20221205105503.mdf" />
-    <Content Include="App_Data\aspnet-PDP-20221205105503_log.ldf">
-      <DependentUpon>aspnet-PDP-20221205105503.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -370,7 +366,9 @@
     <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
