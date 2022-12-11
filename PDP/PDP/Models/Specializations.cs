@@ -9,7 +9,7 @@ namespace PDP.Models
         public int SpecializationID { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
-        public float Price { get; set; }
+        public double Price { get; set; }
 
         [Required(ErrorMessage = "Specialization name is required")]
         public string Name { get; set; }
