@@ -36,5 +36,21 @@ namespace PDP.Controllers
         }
 
 
+        // POST: Consultations/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Create([Bind(Include = "ConsultationID,date_day,slot_hour,price,canceled,Doctor,user")] Consultation consultation)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Consultations.Add(consultation);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(consultation);
+        }
+
     }
 }

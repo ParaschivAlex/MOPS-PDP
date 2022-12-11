@@ -12,12 +12,12 @@ namespace PDP.Models
         [Key]
         public int ConsultationID { get; set; }
 
-        [Required(ErrorMessage = "Please pick a start date!")]
+        [Required(ErrorMessage = "Please pick a day!")]
         [DataType(DataType.Date)]
-        public DateTime startDate { get; set; }
+        public DateTime date_day { get; set; }
 
-        [Required(ErrorMessage = "Please pick an end date!")]
-        public DateTime endDate { get; set; }
+        [Required(ErrorMessage = "Please select a slot!")]
+        public string slot_hour { get; set; }
 
         public double price { get; set; }
         public bool canceled { get; set; }

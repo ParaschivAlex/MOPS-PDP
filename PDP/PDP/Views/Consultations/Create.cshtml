@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
+<script src="~/Scripts/CUSTOM_JS.js"></script>
 
 <h2>Create</h2>
 
@@ -11,18 +12,52 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Specializations</h4>
-        <hr />
+<div class="form-horizontal">
+    <h4>Specializations</h4>
+    <hr />
 
-        <p>@ViewBag.firstName @ViewBag.secondName</p>
+    <p>@ViewBag.firstName @ViewBag.secondName</p>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-outline-success" />
-            </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <h6>Price</h6>
+        </div>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+        </div>
+
+        <br />
+
+        <div class="control-label col-md-2">
+            <h6>Date</h6>
+        </div>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.date_day, "{0:dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "dd.mm.yyyy" })
+            @Html.ValidationMessageFor(model => model.date_day, "", new { @class = "text-danger" })
+        </div>
+
+        <br />
+
+        <div class="control-label col-md-2">
+            <h6>Pick a slot</h6>
+        </div>
+
+        <p>9:00 @Html.RadioButtonFor(m => m.slot_hour, "9:00")</p>
+        <p>9:30 @Html.RadioButtonFor(m => m.slot_hour, "9:30")</p>
+        <p>10:00 @Html.RadioButtonFor(m => m.slot_hour, "10:00")</p>
+        <p>10:30 @Html.RadioButtonFor(m => m.slot_hour, "10:30") </p>
+        @Html.ValidationMessageFor(model => model.slot_hour, "", new { @class = "text-danger" })
+</div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-outline-success" />
         </div>
     </div>
+</div>
 }
 
 <div>
@@ -30,5 +65,6 @@
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
 }
