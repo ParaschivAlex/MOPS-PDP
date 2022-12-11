@@ -54,15 +54,15 @@ namespace PDP.Controllers
             consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
             consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && consultation.date_day > System.DateTime.Today)
             {
-                consultation.canceled = true;
+                consultation.canceled = false;
                 db.Consultations.Add(consultation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            throw new Exception("INVALID");
+            return View(consultation);
         }
 
         // GET: Consulation/Edit/5
@@ -90,7 +90,7 @@ namespace PDP.Controllers
             consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
             consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && consultation.date_day > System.DateTime.Today)
             {
                 db.Entry(consultation).State = EntityState.Modified;
                 db.SaveChanges();
@@ -118,7 +118,7 @@ namespace PDP.Controllers
 
 
         // POST: Consultations/Delete/{ConsultationID}
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
         public ActionResult DeleteConfirmed(int id)

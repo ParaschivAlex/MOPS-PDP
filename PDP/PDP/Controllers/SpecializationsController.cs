@@ -94,7 +94,7 @@ namespace PDP.Controllers
         }
 
         // POST: Specializations/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)

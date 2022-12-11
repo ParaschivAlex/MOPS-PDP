@@ -24,7 +24,7 @@
         <h6>Date</h6>
     </div>
     <div class="col-md-10">
-        @Html.TextBoxFor(model => model.date_day, "{dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "dd.mm.yyyy" })
+        @Html.TextBoxFor(model => model.date_day, "{0:dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "0:dd.mm.yyyy", @type = "date" })
         @Html.ValidationMessageFor(model => model.date_day, "", new { @class = "text-danger" })
     </div>
 
@@ -34,10 +34,10 @@
         <h6>Pick a slot</h6>
     </div>
 
-    <p>9:00 @Html.RadioButtonFor(m => m.slot_hour, "9:00")</p>
-    <p>9:30 @Html.RadioButtonFor(m => m.slot_hour, "9:30")</p>
-    <p>10:00 @Html.RadioButtonFor(m => m.slot_hour, "10:00")</p>
-    <p>10:30 @Html.RadioButtonFor(m => m.slot_hour, "10:30") </p>
+    @for (int i = 15; i < 40; i++)
+    {
+        <span> | @(i/2):@(i%2==0 ? "00":"30") @Html.RadioButtonFor(m => m.slot_hour, i) | </span>
+    }
     @Html.ValidationMessageFor(m => m.slot_hour, "", new { @class = "text-danger" })
 
     @Html.HiddenFor(m => m.ConsultationID, @Model.ConsultationID)

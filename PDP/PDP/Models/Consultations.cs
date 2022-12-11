@@ -14,10 +14,12 @@ namespace PDP.Models
 
         [Required(ErrorMessage = "Please pick a day!")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime date_day { get; set; }
 
         [Required(ErrorMessage = "Please select a slot!")]
-        public string slot_hour { get; set; }
+        [Range(0, 48, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
+        public int slot_hour { get; set; }
 
         public double price { get; set; }
         public bool canceled { get; set; }

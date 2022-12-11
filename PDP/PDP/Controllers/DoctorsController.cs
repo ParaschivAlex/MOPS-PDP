@@ -59,11 +59,12 @@ namespace PDP.Controllers
                     if (ViewBag.selectedOption != -1)
                     {
                         if (ViewBag.selectedOption == doctor.SpecializationID)
-                        {                 
+                        {
                             ViewBag.doctors.Add(doctor);
                         }
-                    } else
-                    { 
+                    }
+                    else
+                    {
                         ViewBag.doctors.Add(doctor);
                     }
                 }
@@ -74,7 +75,7 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         return x.FirstName.CompareTo(y.FirstName);
-                    });                
+                    });
                     break;
                 case "order-by-names-reverse":
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
@@ -221,7 +222,7 @@ namespace PDP.Controllers
         }
 
         // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
