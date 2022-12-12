@@ -14,8 +14,8 @@ namespace PDP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Specializations
-        public ActionResult Index()
+		// GET: Specializations
+		public ActionResult Index()
         {
             return View(db.Specializations.ToList());
         }
