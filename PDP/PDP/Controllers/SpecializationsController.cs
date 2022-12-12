@@ -15,7 +15,6 @@ namespace PDP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Specializations
-        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Specializations.ToList());
