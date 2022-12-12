@@ -44,6 +44,19 @@ namespace PDP.Controllers
             return View(consultation);
         }
 
+        private bool IsTimeSlotAvailable(Consultation consultation)
+        {
+            var consultations = from com in db.Consultations
+                                where com.DoctorId == consultation.DoctorId &&
+                                com.date_day == consultation.date_day &&
+                                com.slot_hour == consultation.slot_hour
+                                select com;
+
+            if (consultations.Any())
+                return false;
+            else
+                return true;
+        }
 
         // POST: Consultations/Create
         [HttpPost]
@@ -54,14 +67,27 @@ namespace PDP.Controllers
             consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
             consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
 
-            if (ModelState.IsValid && consultation.date_day > System.DateTime.Today)
+            if (!ModelState.IsValid)
             {
-                db.Consultations.Add(consultation);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.ConsultationCreateError = "Model state is not valid...";
+                return View(consultation);
             }
 
-            return View(consultation);
+            if (consultation.date_day <= System.DateTime.Today)
+            {
+                ViewBag.ConsultationCreateError = "You can only make an appointment starting tomorrow...";
+                return View(consultation);
+            }
+
+            if (!IsTimeSlotAvailable(consultation))
+            {
+                ViewBag.ConsultationCreateError = "Selected date and time is not free. Please choose other time slot or date";
+                return View(consultation);
+            }
+
+            db.Consultations.Add(consultation);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Consulation/Edit/5
@@ -72,16 +98,16 @@ namespace PDP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultation consulations = db.Consultations.Find(id);
-            if (consulations == null)
+            Consultation consulation = db.Consultations.Find(id);
+            if (consulation == null)
             {
                 return HttpNotFound();
             }
-            return View(consulations);
+            return View(consulation);
         }
 
         // POST: Consulations/Edit/5
-        [HttpPost]
+        [HttpPut]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(Consultation consultation)
@@ -89,13 +115,27 @@ namespace PDP.Controllers
             consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
             consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
 
-            if (ModelState.IsValid && consultation.date_day > System.DateTime.Today)
+            if (!ModelState.IsValid)
             {
-                db.Entry(consultation).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.ConsultationCreateError = "Model state is not valid...";
+                return View(consultation);
             }
-            return View(consultation);
+
+            if (consultation.date_day <= System.DateTime.Today)
+            {
+                ViewBag.ConsultationCreateError = "You can only make an appointment starting tomorrow...";
+                return View(consultation);
+            }
+
+            if (!IsTimeSlotAvailable(consultation))
+            {
+                ViewBag.ConsultationCreateError = "Selected date and time is not free. Please choose other time slot or date";
+                return View(consultation);
+            }
+
+            db.Entry(consultation).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 
