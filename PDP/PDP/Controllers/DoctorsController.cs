@@ -44,7 +44,7 @@ namespace PDP.Controllers
             foreach (Doctor doctor in db.Doctors.ToList())
             {
                 String searchText = doctor.FirstName.ToLowerInvariant() + doctor.SecondName.ToLowerInvariant();
-                foreach (Specializations specialization in ViewBag.specializations)
+                foreach (Specialization specialization in ViewBag.specializations)
                 {
                     if (doctor.SpecializationID == specialization.SpecializationID)
                     {
@@ -89,7 +89,7 @@ namespace PDP.Controllers
                         // TODO: Change it to how we actually calculate the price of a doctor
                         double xPrice = 0;
                         double yPrice = 0;
-                        foreach (Specializations specialization in ViewBag.specializations)
+                        foreach (Specialization specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
                             {
@@ -111,7 +111,7 @@ namespace PDP.Controllers
                         // TODO: Change it to how we actually calculate the price of a doctor
                         double xPrice = 0;
                         double yPrice = 0;
-                        foreach (Specializations specialization in ViewBag.specializations)
+                        foreach (Specialization specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
                             {
@@ -225,7 +225,7 @@ namespace PDP.Controllers
         [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
             db.Doctors.Remove(doctor);
@@ -234,7 +234,7 @@ namespace PDP.Controllers
         }
 
         [NonAction]
-        public IEnumerable<Specializations> GetAllSpecializations()
+        public IEnumerable<Specialization> GetAllSpecializations()
         {
             var specs = from sp in db.Specializations
                         select sp;

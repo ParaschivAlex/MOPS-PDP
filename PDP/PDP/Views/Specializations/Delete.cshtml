@@ -1,4 +1,4 @@
-﻿@model PDP.Models.Specializations
+﻿@model PDP.Models.Specialization
 
 @{
     ViewBag.Title = "Delete";
@@ -29,12 +29,20 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+    <div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <br />
+            <div class="row">
+                <div class="col-sm-1">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
+                <div class="col-sm-1">
+                    <a class="btn btn-warning" href="/Specializations">Abort</a>
+                </div>
+            </div>
+        }
+    </div>
 </div>

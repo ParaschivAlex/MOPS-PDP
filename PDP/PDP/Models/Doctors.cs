@@ -18,6 +18,8 @@ namespace PDP.Models
         // Doctor's specialization
         [Required(ErrorMessage = "Please pick a specialization!")]
         public int SpecializationID { get; set; }
+        public virtual Specialization Specialization { get; set; }
+
 
         // Whether the Doctor can be booked or not
         public bool IsAvailable { get; set; }
@@ -44,7 +46,7 @@ namespace PDP.Models
         public virtual ICollection<Consultation> Consultations { get; set; }
 
         // Calculates consultation price
-        public double CalcultateConsultationPrice(Specializations specialization)
+        public double CalcultateConsultationPrice(Specialization specialization)
         {
             return specialization.Price * this.PriceRate;
         }

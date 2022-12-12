@@ -19,7 +19,7 @@
             <button type="submit" class="btn-success">Filter</button>
             <select class="form-control-sm" id="SelectOption" name="SelectOption">
                 <option value="-1" @(ViewBag.selectedOption == -1 ? "selected" : "")>All specializations</option>
-                @foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+                @foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
                 {
                     <option value=@specialization.SpecializationID @(ViewBag.selectedOption == specialization.SpecializationID ? "selected" : "")>@specialization.Name</option>
                 }
@@ -55,12 +55,12 @@
     @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
     {
         // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
-        PDP.Models.Specializations currentSpecialization = null;
-        foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+        PDP.Models.Specialization currentSpecialization = null;
+        foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
         {
             if (doctor.SpecializationID == specialization.SpecializationID)
             {
-                currentSpecialization = new PDP.Models.Specializations
+                currentSpecialization = new PDP.Models.Specialization
                 {
                     SpecializationID = specialization.SpecializationID,
                     Price = specialization.Price,

@@ -22,7 +22,6 @@ namespace PDP.Models
         public int slot_hour { get; set; }
 
         public double price { get; set; }
-        public bool canceled { get; set; }
 
         [Required]
         public int DoctorId { get; set; }

@@ -9,12 +9,12 @@
 
 @{
     // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
-    PDP.Models.Specializations currentSpecialization = null;
-    foreach (PDP.Models.Specializations specialization in ViewBag.specializations)
+    PDP.Models.Specialization currentSpecialization = null;
+    foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
     {
         if (Model.SpecializationID == specialization.SpecializationID)
         {
-            currentSpecialization = new PDP.Models.Specializations
+            currentSpecialization = new PDP.Models.Specialization
             {
                 SpecializationID = specialization.SpecializationID,
                 Price = specialization.Price,
@@ -48,9 +48,8 @@
                 <div class="col-md-1">
                     @if (User.IsInRole("Admin"))
                     {
-                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorId }))
+                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Get, routeValues: new { id = @Model.DoctorId }))
                         {
-                            @Html.HttpMethodOverride(HttpVerbs.Delete)
                             <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-trash"></i> Delete</button>
                         }
                     }

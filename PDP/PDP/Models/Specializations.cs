@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PDP.Models
 {
-    public class Specializations
+    public class Specialization
     {
         [Key]
         public int SpecializationID { get; set; }
@@ -13,5 +13,8 @@ namespace PDP.Models
 
         [Required(ErrorMessage = "Specialization name is required")]
         public string Name { get; set; }
+
+        public virtual ICollection<Doctor> Doctors { get; set; }
+
     }
 }

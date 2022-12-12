@@ -34,16 +34,16 @@ namespace PDP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "SpecializationID,Price,Name")] Specializations specializations)
+        public ActionResult Create([Bind(Include = "SpecializationID,Price,Name")] Specialization specialization)
         {
             if (ModelState.IsValid)
             {
-                db.Specializations.Add(specializations);
+                db.Specializations.Add(specialization);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(specializations);
+            return View(specialization);
         }
 
         // GET: Specializations/Edit/5
@@ -54,27 +54,27 @@ namespace PDP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Specializations specializations = db.Specializations.Find(id);
-            if (specializations == null)
+            Specialization specialization = db.Specializations.Find(id);
+            if (specialization == null)
             {
                 return HttpNotFound();
             }
-            return View(specializations);
+            return View(specialization);
         }
 
         // POST: Specializations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "SpecializationID,Price,Name")] Specializations specializations)
+        public ActionResult Edit([Bind(Include = "SpecializationID,Price,Name")] Specialization specialization)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(specializations).State = EntityState.Modified;
+                db.Entry(specialization).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(specializations);
+            return View(specialization);
         }
 
         // GET: Specializations/Delete/5
@@ -85,22 +85,22 @@ namespace PDP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Specializations specializations = db.Specializations.Find(id);
-            if (specializations == null)
+            Specialization specialization = db.Specializations.Find(id);
+            if (specialization == null)
             {
                 return HttpNotFound();
             }
-            return View(specializations);
+            return View(specialization);
         }
 
         // POST: Specializations/Delete/5
         [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
-            Specializations specializations = db.Specializations.Find(id);
-            db.Specializations.Remove(specializations);
+            Specialization specialization = db.Specializations.Find(id);
+            db.Specializations.Remove(specialization);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

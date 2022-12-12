@@ -56,7 +56,6 @@ namespace PDP.Controllers
 
             if (ModelState.IsValid && consultation.date_day > System.DateTime.Today)
             {
-                consultation.canceled = false;
                 db.Consultations.Add(consultation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -121,7 +120,7 @@ namespace PDP.Controllers
         [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Consultation consultation = db.Consultations.Find(id);
             db.Consultations.Remove(consultation);
