@@ -44,7 +44,7 @@ namespace PDP.Controllers
             foreach (Doctor doctor in db.Doctors.ToList())
             {
                 String searchText = doctor.FirstName.ToLowerInvariant() + doctor.SecondName.ToLowerInvariant();
-                foreach (Specializations specialization in ViewBag.specializations)
+                foreach (Specialization specialization in ViewBag.specializations)
                 {
                     if (doctor.SpecializationID == specialization.SpecializationID)
                     {
@@ -59,11 +59,12 @@ namespace PDP.Controllers
                     if (ViewBag.selectedOption != -1)
                     {
                         if (ViewBag.selectedOption == doctor.SpecializationID)
-                        {                 
+                        {
                             ViewBag.doctors.Add(doctor);
                         }
-                    } else
-                    { 
+                    }
+                    else
+                    {
                         ViewBag.doctors.Add(doctor);
                     }
                 }
@@ -74,7 +75,7 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         return x.FirstName.CompareTo(y.FirstName);
-                    });                
+                    });
                     break;
                 case "order-by-names-reverse":
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
@@ -86,9 +87,9 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        float xPrice = 0;
-                        float yPrice = 0;
-                        foreach (Specializations specialization in ViewBag.specializations)
+                        double xPrice = 0;
+                        double yPrice = 0;
+                        foreach (Specialization specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
                             {
@@ -108,9 +109,9 @@ namespace PDP.Controllers
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
-                        float xPrice = 0;
-                        float yPrice = 0;
-                        foreach (Specializations specialization in ViewBag.specializations)
+                        double xPrice = 0;
+                        double yPrice = 0;
+                        foreach (Specialization specialization in ViewBag.specializations)
                         {
                             if (x.SpecializationID == specialization.SpecializationID)
                             {
@@ -168,6 +169,7 @@ namespace PDP.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.specializations = GetAllSpecializationsForSelect();
             return View(doctor);
         }
 
@@ -220,10 +222,10 @@ namespace PDP.Controllers
         }
 
         // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
             db.Doctors.Remove(doctor);
@@ -232,7 +234,7 @@ namespace PDP.Controllers
         }
 
         [NonAction]
-        public IEnumerable<Specializations> GetAllSpecializations()
+        public IEnumerable<Specialization> GetAllSpecializations()
         {
             var specs = from sp in db.Specializations
                         select sp;

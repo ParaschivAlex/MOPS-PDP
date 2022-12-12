@@ -33,7 +33,7 @@ namespace PDP.Models
 
         public DbSet<Doctor> Doctors { get; set; }
 
-        public DbSet<Specializations> Specializations { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
 
         public DbSet<Consultation> Consultations { get; set; }
 
