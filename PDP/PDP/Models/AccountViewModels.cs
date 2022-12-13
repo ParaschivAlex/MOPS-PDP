@@ -15,7 +15,7 @@ namespace PDP.Models
         public string ReturnUrl { get; set; }
     }
 
-    public class SendCodeViewModel
+    /*public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
@@ -38,13 +38,12 @@ namespace PDP.Models
 
         public bool RememberMe { get; set; }
     }
-
     public class ForgotViewModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+    }*/
 
     public class LoginViewModel
     {
@@ -111,11 +110,11 @@ namespace PDP.Models
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel
+    /*public class ForgotPasswordViewModel
     {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+    }*/
 }

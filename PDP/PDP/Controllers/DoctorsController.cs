@@ -78,21 +78,22 @@ namespace PDP.Controllers
                     }
                 }
             }
-            switch (ViewBag.sortOption)
-            {
-                case "order-by-names":
+                if (ViewBag.sortOption == "order-by-names")
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
-                    {
-                        return x.FirstName.CompareTo(y.FirstName);
-                    });
-                    break;
-                case "order-by-names-reverse":
+                        {
+                            return x.FirstName.CompareTo(y.FirstName);
+                        });
+                }
+                if (ViewBag.sortOption == "order-by-names-reverse")
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         return y.FirstName.CompareTo(x.FirstName);
                     });
-                    break;
-                case "order-by-price":
+                }
+                if (ViewBag.sortOption == "order-by-price")
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
@@ -113,8 +114,9 @@ namespace PDP.Controllers
                         yPrice *= y.PriceRate;
                         return xPrice.CompareTo(yPrice);
                     });
-                    break;
-                case "order-by-price-reverse":
+                }
+                if (ViewBag.sortOption == "order-by-price-reverse")
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
@@ -135,8 +137,7 @@ namespace PDP.Controllers
                         yPrice *= y.PriceRate;
                         return yPrice.CompareTo(xPrice);
                     });
-                    break;
-            }
+                }
             return View();
         }
 

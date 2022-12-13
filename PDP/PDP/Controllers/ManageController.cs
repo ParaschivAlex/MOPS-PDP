@@ -84,7 +84,7 @@ namespace PDP.Controllers
             return View(model);
         }
 
-        //
+        
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -186,14 +186,14 @@ namespace PDP.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }*/
 
-        //
+        /*
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
-
+        
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
@@ -221,7 +221,7 @@ namespace PDP.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -230,7 +230,7 @@ namespace PDP.Controllers
             return View();
         }
 
-        //
+        */
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -272,7 +272,7 @@ namespace PDP.Controllers
             return View();
         }
 
-        /*
+        
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -283,7 +283,7 @@ namespace PDP.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
+        /*
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
@@ -317,7 +317,7 @@ namespace PDP.Controllers
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
         }
-
+        */
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
@@ -384,7 +384,7 @@ namespace PDP.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
-        }*/
+        }
 
         //
         // POST: /Account/LogOff
