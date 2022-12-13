@@ -23,15 +23,19 @@
                 <h6>Base price: @specialization.Price</h6>
             </div>
         </div>
-                <div class="col-md-1">
-                    <a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-                </div>
-                    <div class="col-md-1">
-                        <form method="post" action="/Specializations/Delete/@specialization.SpecializationID">
-                            @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
-                        </form>
-                    </div>                     
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="col-md-1">
+                <a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
+            </div>
+            <div class="col-md-1">
+                <form method="post" action="/Specializations/Delete/@specialization.SpecializationID">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+                </form>
+            </div>
+        }
+
     </div>
 <hr />
 }
