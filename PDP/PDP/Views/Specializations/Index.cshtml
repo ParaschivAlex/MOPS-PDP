@@ -1,29 +1,28 @@
 ﻿@if (TempData.ContainsKey("message"))
 {
-    <h1>@ViewBag.message</h1>
+	<h1 class="text-center"> @ViewBag.message&nbsp;</h1>
+	<br />
 }
 
 <h2>@ViewBag.Title</h2>
 <br />
 
-<h2>Specializations available in the application</h2>
-<br />
-
-<a class="btn btn-primary" href="/Specializations/Create">Add specialization</a>
-<hr />
-<br />
-
+@if (User.IsInRole("Admin"))
+{
+	<a class="btn btn-success justify-content-center" href="/Specializations/Create">Add specialization</a>
+	<br /><br />
+	<hr />
+	
+}
 @foreach (var specialization in Model)
 {
-    <div style="display: inline-block">
-        <h3>@specialization.Name</h3>
-        <h6>Base price: @specialization.Price</h6>
-    </div>
-    <div style="float: right; height: 100%">
-        <a class="btn btn-success" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-        <a class="btn btn-danger" href="/Specializations/Delete/@specialization.SpecializationID" style="display: inline-block;">Delete</a>
-    </div>
-    <br />
-    <hr />
-    <br />
+	<div style="display: inline-block">
+		<h3>@specialization.Name</h3>
+		<h6>Base price: @specialization.Price</h6>
+	</div>
+	<div style="float: right; height: 100%">
+		<a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
+		<a class="btn btn-danger" href="/Specializations/Delete/@specialization.SpecializationID" style="display: inline-block;">Delete</a>
+	</div>
+	<hr />
 }

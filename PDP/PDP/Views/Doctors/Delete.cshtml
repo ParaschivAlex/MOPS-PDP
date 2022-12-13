@@ -3,24 +3,20 @@
 @{
     ViewBag.Title = "Delete";
 }
-
+<br />
 <h3>Are you sure you want to delete the doctor @Model.FirstName @Model.SecondName?</h3>
 <h5 style="font-style:italic">This changes will not be reversible</h5>
-<img src="@Model.Photo" style="width:16em;" />
-<div>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <br />
-        <div class="row">
-            <div class="col-sm-1">
-                <a class="btn btn-warning" href="/Doctors">Abort</a>
-            </div>
-            <div class="col-sm-1">
-                <input type="submit" value="Delete" class="btn btn-danger" />
-            </div>
+<img src="@Model.Photo" style="width:16em;" /> 
+<div><br />
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+		@Html.HttpMethodOverride(HttpVerbs.Delete)
 
-        </div>
-    }
+		<div class="form-actions no-color">
+			<button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+			<a class="btn btn-info" href="/Doctors/Index">Back</a>
+		</div>
+	}
+	<br /><hr />
 </div>

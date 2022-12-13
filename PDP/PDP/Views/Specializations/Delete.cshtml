@@ -29,20 +29,17 @@
 
     </dl>
 
-    <div>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <br />
-            <div class="row">
-                <div class="col-sm-1">
-                    <input type="submit" value="Delete" class="btn btn-danger" />
-                </div>
-                <div class="col-sm-1">
-                    <a class="btn btn-warning" href="/Specializations">Abort</a>
-                </div>
-            </div>
-        }
-    </div>
+	<div>
+		@using (Html.BeginForm())
+		{
+			@Html.AntiForgeryToken()
+			@Html.HttpMethodOverride(HttpVerbs.Delete)
+
+			<div class="form-actions no-color">
+				<button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+				<a class="btn btn-info" href="/Specializations/Index">Back</a>
+			</div>
+		}
+		<br /><hr />
+	</div>
 </div>

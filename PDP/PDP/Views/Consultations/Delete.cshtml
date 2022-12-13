@@ -6,9 +6,8 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure?</h3>
+<h3>Are you sure?</h3> <br/>
 <div>
-    <hr />
 
     @using (Html.BeginForm())
     {
@@ -16,8 +15,9 @@
         @Html.HttpMethodOverride(HttpVerbs.Delete)
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+			<button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+			<a class="btn btn-info" href="/Consultations/Index">Back</a>
         </div>
     }
+    <br/><hr/>
 </div>

@@ -8,14 +8,12 @@
 {
     @Html.AntiForgeryToken()
 
-
+    <br/>
 <div class="form-horizontal">
     <div style="display:inline-block" class="control-label col-md-4">
-        <h4>Editing a doctor</h4>
+        <h2>Editing a doctor</h2>
     </div>
-    <div style="float:right;">
-        <a class="btn btn-warning" href="/Doctors">Return</a>
-    </div>
+    
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.DoctorId)
@@ -104,13 +102,14 @@
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-success" />
-        </div>
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Save" class="btn btn-success" />
+				<a class="btn btn-info" href="/Doctors">Back</a>
+		</div>
     </div>
 </div>
 }
-
+<br/><hr/>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

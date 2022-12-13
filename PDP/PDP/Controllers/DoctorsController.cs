@@ -17,7 +17,6 @@ namespace PDP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Doctors
-        [Authorize(Roles = "User, Admin")]
         public ActionResult Index()
         {
             ViewBag.selectedOption = -1;
