@@ -16,6 +16,8 @@ namespace PDP.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ManageController()
         {
         }
@@ -54,6 +56,7 @@ namespace PDP.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -64,13 +67,19 @@ namespace PDP.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            var selected_user = db.Users.Single(t => t.Id == userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Address = selected_user.address,
+                City = selected_user.city,
+                Country = selected_user.country
             };
             return View(model);
         }

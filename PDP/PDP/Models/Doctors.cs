@@ -28,12 +28,12 @@ namespace PDP.Models
         [Range(typeof(double), "0.01", "100.00", ErrorMessage = "enter decimal value")]
         public double PriceRate { get; set; }
 
-        [MinLength(10), MaxLength(12)]
-        [Required(ErrorMessage = "Please enter a phone number!")]
+        [Required(ErrorMessage = "The phone number is mandatory.")]
+        [RegularExpression(@"^(\+4|)?[0-9]{6,}", ErrorMessage = "This phone number is not valid.")]
         public string PhoneNumber { get; set; }
 
-        [MinLength(7), MaxLength(25)]
-        [Required(ErrorMessage = "Please enter an email!")]
+        [Required(ErrorMessage = "The email is mandatory.")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This email is not valid.")]
         public string Email { get; set; }
 
         // A string which points to a doctor profile photo

@@ -204,31 +204,15 @@ namespace PDP.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Doctors/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
-
         // POST: Doctors/Delete/5
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
             db.Doctors.Remove(doctor);
             db.SaveChanges();
+            TempData["message"] = "The doctor has been deleted!";
             return RedirectToAction("Index");
         }
 

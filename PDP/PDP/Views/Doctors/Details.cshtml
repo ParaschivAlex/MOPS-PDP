@@ -52,15 +52,16 @@
 						<a class="btn btn-primary" href="/Consultations/Create/@Model.DoctorId">Add Consultation</a>
 					}
 				</div>
-				<div class="col-md-4">
-					@if (User.IsInRole("Admin"))
-					{
-						using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Get, routeValues: new { id = @Model.DoctorId }))
-						{
-							<button class="btn btn-danger" type="submit">Delete</button>
-						}
-					}
-				</div>
+                <div class="col-md-4">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorId }))
+                        {
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        }
+                    }
+                </div>
 
 			</div>
 		</div>

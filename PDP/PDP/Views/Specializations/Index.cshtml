@@ -1,28 +1,37 @@
 ﻿@if (TempData.ContainsKey("message"))
 {
-	<h1 class="text-center"> @ViewBag.message&nbsp;</h1>
-	<br />
+    <h1 class="text-center"> @ViewBag.message&nbsp;</h1>
+    <br />
 }
 
 <h2>@ViewBag.Title</h2>
-<br />
 
 @if (User.IsInRole("Admin"))
 {
-	<a class="btn btn-success justify-content-center" href="/Specializations/Create">Add specialization</a>
-	<br /><br />
-	<hr />
-	
+    <a class="btn btn-success justify-content-center" href="/Specializations/Create">Add specialization</a>
+    <br />
+    <br />
+    <hr />
+
 }
 @foreach (var specialization in Model)
 {
-	<div style="display: inline-block">
-		<h3>@specialization.Name</h3>
-		<h6>Base price: @specialization.Price</h6>
-	</div>
-	<div style="float: right; height: 100%">
-		<a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-		<a class="btn btn-danger" href="/Specializations/Delete/@specialization.SpecializationID" style="display: inline-block;">Delete</a>
-	</div>
-	<hr />
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-10">
+            <div style="display: inline-block">
+                <h3>@specialization.Name</h3>
+                <h6>Base price: @specialization.Price</h6>
+            </div>
+        </div>
+                <div class="col-md-1">
+                    <a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
+                </div>
+                    <div class="col-md-1">
+                        <form method="post" action="/Specializations/Delete/@specialization.SpecializationID">
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+                        </form>
+                    </div>                     
+    </div>
+<hr />
 }

@@ -372,18 +372,15 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Doctors\Create.cshtml" />
-    <Content Include="Views\Doctors\Delete.cshtml" />
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Specializations\Create.cshtml" />
-    <Content Include="Views\Specializations\Delete.cshtml" />
     <Content Include="Views\Specializations\Details.cshtml" />
     <Content Include="Views\Specializations\Edit.cshtml" />
     <Content Include="Views\Specializations\Index.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />
     <Content Include="Views\Consultations\Create.cshtml" />
-    <Content Include="Views\Consultations\Delete.cshtml" />
     <Content Include="Views\Consultations\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>

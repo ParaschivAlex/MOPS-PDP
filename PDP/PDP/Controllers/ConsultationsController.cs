@@ -138,27 +138,8 @@ namespace PDP.Controllers
             return RedirectToAction("Index");
         }
 
-
-        // GET: Consultations/Delete/5
-        [Authorize(Roles = "User, Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Consultation consultation = db.Consultations.Find(id);
-            if (consultation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(consultation);
-        }
-
-
         // POST: Consultations/Delete/{ConsultationID}
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
         public ActionResult Delete(int id)
         {
