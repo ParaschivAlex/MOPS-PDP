@@ -23,7 +23,7 @@ namespace PDP.Tests.Controllers
         private SpecializationsController specializationsController = new SpecializationsController();
 
         [TestMethod]
-		public void MethodsTest()
+		public void AllSpecilizationsMethodsTests()
         {
             // Get specializations received by Index when loading
             ViewResult indexResultBeforeCreate = specializationsController.Index() as ViewResult;
@@ -78,8 +78,8 @@ namespace PDP.Tests.Controllers
             bool foundChangedSpecializationEdittedName = false;
             // Get all specializations
             ViewResult indexResultAfterEdit = specializationsController.Index() as ViewResult;
-            List<Specialization> indexDataAfterEdit = indexResult.ViewData.Model as List<Specialization>;
-            foreach (Specialization viewSpecialization in indexData)
+            List<Specialization> indexDataAfterEdit = indexResultAfterEdit.ViewData.Model as List<Specialization>;
+            foreach (Specialization viewSpecialization in indexDataAfterEdit)
             {
                 if (specializationsToAdd[1].Name.Equals(viewSpecialization.Name) 
                     && specializationsToAdd[1].Price.Equals(viewSpecialization.Price) 
@@ -101,7 +101,7 @@ namespace PDP.Tests.Controllers
 
             // Get specializations received by Index when loading
             ViewResult indexResultAfterDelete = specializationsController.Index() as ViewResult;
-            List<Specialization> indexDataAfterDelete = indexResult.ViewData.Model as List<Specialization>;
+            List<Specialization> indexDataAfterDelete = indexResultAfterDelete.ViewData.Model as List<Specialization>;
 
             // Assert for Index method after deleting
             Assert.IsNotNull(indexResultAfterDelete);

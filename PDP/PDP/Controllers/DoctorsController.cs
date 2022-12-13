@@ -17,26 +17,38 @@ namespace PDP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Doctors
-        public ActionResult Index()
+        public ActionResult Index(String sortOption = "order-by-names", String searchString = "", int selectedOption = -1)
         {
-            ViewBag.selectedOption = -1;
-            ViewBag.searchString = "";
-            ViewBag.sortOption = "order-by-names";
-            if (Request.Params.Get("SelectOption") != null)
+            // Try to get selectedOption from Request
+            ViewBag.selectedOption = selectedOption;
+            ViewBag.searchString = searchString;
+            ViewBag.sortOption = sortOption;
+            try
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SelectOption"));
-                ViewBag.selectedOption = Int32.Parse(Request.Params.Get("SelectOption"));
-            }
-            if (Request.Params.Get("SearchString") != null)
+                ViewBag.selectedOption = (String.IsNullOrEmpty(Request.Params.Get("SelectOption"))) ? selectedOption : Int32.Parse(Request.Params.Get("SelectOption"));
+            } catch (Exception exception)
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SearchString"));
-                ViewBag.searchString = Request.Params.Get("SearchString");
+                ViewBag.selectedOption = selectedOption;
             }
-            if (Request.Params.Get("SortOption") != null)
+            // Try to get searchString from Request
+            try
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SortOption"));
-                ViewBag.sortOption = Request.Params.Get("SortOption");
+                ViewBag.searchString = (String.IsNullOrEmpty(Request.Params.Get("SearchString"))) ? searchString : Request.Params.Get("SearchString");
             }
+            catch (Exception exception)
+            {
+                ViewBag.searchString = searchString;
+            }
+            // Try to get sortOption from Request
+            try
+            {
+                ViewBag.sortOption = (String.IsNullOrEmpty(Request.Params.Get("SortOption"))) ? sortOption : Request.Params.Get("SortOption");
+            }
+            catch (Exception exception)
+            {
+                ViewBag.sortOption = sortOption;
+            }
+            System.Diagnostics.Debug.WriteLine(searchString);
             ViewBag.specializations = GetAllSpecializations();
             ViewBag.doctors = new List<Doctor>();
             // filter doctors
@@ -47,12 +59,10 @@ namespace PDP.Controllers
                 {
                     if (doctor.SpecializationID == specialization.SpecializationID)
                     {
-                        System.Diagnostics.Debug.WriteLine(Request.Params.Get("Founddd"));
                         searchText += specialization.Name;
                         break;
                     }
                 }
-                System.Diagnostics.Debug.WriteLine(Request.Params.Get(searchText));
                 if (searchText.Contains(ViewBag.searchString.ToLowerInvariant()))
                 {
                     if (ViewBag.selectedOption != -1)
