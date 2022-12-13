@@ -79,6 +79,15 @@ namespace PDP.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Country")]
+        public string  country { get; set; }
+
+        [Display(Name = "City")]
+        public string city { get; set; }
+
+        [Display(Name = "Address")]
+        public string address { get; set; }
     }
 
     public class ResetPasswordViewModel

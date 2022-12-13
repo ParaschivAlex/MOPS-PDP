@@ -20,6 +20,12 @@ namespace PDP.Models
 
         public virtual ICollection<Consultation> Consultations { get; set; }
 
+        public string country { get; set; }
+
+        public string city { get; set; }
+
+        public string address { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
