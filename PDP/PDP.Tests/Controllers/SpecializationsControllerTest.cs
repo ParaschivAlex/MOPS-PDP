@@ -25,6 +25,10 @@ namespace PDP.Tests.Controllers
         [TestMethod]
 		public void MethodsTest()
         {
+            // Get specializations received by Index when loading
+            ViewResult indexResultBeforeCreate = specializationsController.Index() as ViewResult;
+            List<Specialization> indexDataBeforeCreate = indexResultBeforeCreate.ViewData.Model as List<Specialization>;
+
             // ============================= CREATE & INDEX TESTS ==================================
             // Creates the declared specializations and tests if they are received in the view
             // Create specializations
@@ -39,7 +43,7 @@ namespace PDP.Tests.Controllers
 
             // Assert for Index method after creating
             Assert.IsNotNull(indexResult);
-            Assert.AreEqual(specializationsToAdd.Count(), indexData.Count());
+            Assert.AreEqual(specializationsToAdd.Count() + indexDataBeforeCreate.Count(), indexData.Count());
             foreach (Specialization specToAdd in specializationsToAdd)
             {
                 Assert.IsTrue(indexData.Contains(specToAdd));
