@@ -48,7 +48,6 @@ namespace PDP.Controllers
             {
                 ViewBag.sortOption = sortOption;
             }
-            System.Diagnostics.Debug.WriteLine(searchString);
             ViewBag.specializations = GetAllSpecializations();
             ViewBag.doctors = new List<Doctor>();
             // filter doctors
@@ -78,21 +77,22 @@ namespace PDP.Controllers
                     }
                 }
             }
-                if (ViewBag.sortOption == "order-by-names")
+            System.Diagnostics.Debug.WriteLine("sortOption : " + sortOption + "   vs   Viewbag sortOption: " + ViewBag.sortOption as string);
+            if (ViewBag.sortOption == "order-by-names")
                 {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                         {
                             return x.FirstName.CompareTo(y.FirstName);
                         });
                 }
-                if (ViewBag.sortOption == "order-by-names-reverse")
+            else if ((ViewBag.sortOption as string).Equals("order-by-names-reverse"))
                 {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         return y.FirstName.CompareTo(x.FirstName);
                     });
                 }
-                if (ViewBag.sortOption == "order-by-price")
+            else if ((ViewBag.sortOption as string).Equals("order-by-price"))
                 {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
@@ -115,7 +115,7 @@ namespace PDP.Controllers
                         return xPrice.CompareTo(yPrice);
                     });
                 }
-                if (ViewBag.sortOption == "order-by-price-reverse")
+            else if ((ViewBag.sortOption as string).Equals("order-by-price-reverse"))
                 {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {

@@ -100,7 +100,7 @@ namespace PDP.Tests.Controllers
             Assert.AreEqual(indexDataSearchString[0], doctorsToAdd[0]);
 
             // ======================= Test orderBy is received as exceptedn ========================================
-            ViewResult indexResultSortOption = doctorsController.Index() as ViewResult;
+            ViewResult indexResultSortOption = doctorsController.Index(sortOption: "order-by-names") as ViewResult;
             List<Doctor> indexDataSortOption = indexResultSortOption.ViewData["doctors"] as List<Doctor>;
             ViewResult indexResultSortOption1 = doctorsController.Index(sortOption: "order-by-names-reverse") as ViewResult;
             List<Doctor> indexDataSortOption1 = indexResultSortOption1.ViewData["doctors"] as List<Doctor>;
