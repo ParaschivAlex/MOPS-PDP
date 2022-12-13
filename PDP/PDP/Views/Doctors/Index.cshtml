@@ -1,0 +1,91 @@
+﻿@model IEnumerable<PDP.Models.Doctor>
+
+@{
+    ViewBag.Title = "Doctors";
+}
+
+<h2>Doctors</h2>
+<br />
+
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-primary" href="/Doctors/Create">Add a doctor</a>
+    <br />
+}
+<br />
+<div class="row">
+    <div class="col-sm-4">
+        <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get">
+            <button type="submit" class="btn-success">Filter</button>
+            <select class="form-control-sm" id="SelectOption" name="SelectOption">
+                <option value="-1" @(ViewBag.selectedOption == -1 ? "selected" : "")>All specializations</option>
+                @foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
+                {
+                    <option value=@specialization.SpecializationID @(ViewBag.selectedOption == specialization.SpecializationID ? "selected" : "")>@specialization.Name</option>
+                }
+            </select>
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <div class="text-center">
+            <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get">
+                <button type="submit" class="btn-warning">Sort</button>
+                <select class="form-control-sm" id="SortOption" name="SortOption">
+                    <option value="order-by-names" @(ViewBag.sortOption == "order-by-names" ? "selected" : "") >Ascending by names</option>
+                    <option value="order-by-names-reverse" @(ViewBag.sortOption == "order-by-names-reverse" ? "selected" : "")>Descending by names</option>
+                    <option value="order-by-price"  @(ViewBag.sortOption == "order-by-names-price" ? "selected" : "")>Ascending by price</option>
+                    <option value="order-by-price-reverse"  @(ViewBag.sortOption == "order-by-price-reverse" ? "selected" : "")>Descending by price</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="float-right">
+            <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get" style="text-align:left">
+                <p>
+                    <input type="text" name="SearchString" placeholder=@(ViewBag.searchString != "" ? ViewBag.searchString : "Enter a keyword") />
+                    <input type="image" alt="Search" src="https://cdn0.iconfinder.com/data/icons/very-basic-2-android-l-lollipop-icon-pack/24/search-512.png" style="height:1.2em;" />
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
+    @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
+    {
+        // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
+        PDP.Models.Specialization currentSpecialization = null;
+        foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
+        {
+            if (doctor.SpecializationID == specialization.SpecializationID)
+            {
+                currentSpecialization = new PDP.Models.Specialization
+                {
+                    SpecializationID = specialization.SpecializationID,
+                    Price = specialization.Price,
+                    Name = specialization.Name
+                };
+                break;
+            }
+        }
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <hr />
+                <a href="/Doctors/Details/@doctor.DoctorId">
+                    <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                </a>
+                <div style="text-align:center">
+                    <a href="/Doctors/Details/@doctor.DoctorId">
+                        <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                    </a>
+                </div>
+                <br />
+                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
+                <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+                <a class="card-footer" href="/Consultations/Create/@doctor.DoctorId">Add Consultation</a>
+            </div>
+        </div>
+    }
+</div>

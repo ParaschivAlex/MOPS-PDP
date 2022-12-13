@@ -1,0 +1,68 @@
+﻿@model PDP.Models.Consultation
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<div class="text-danger">@ViewBag.ConsultationCreateError</div>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Consultations"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    <div class="form-horizontal">
+        <h4>Specializations</h4>
+        <hr />
+
+        <p>@ViewBag.firstName @ViewBag.secondName</p>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <p>Original Date: @Model.date_day.DayOfWeek, @Model.date_day.Month/@Model.date_day.Day/@Model.date_day.Year</p>
+                <p>Original Time: @(Model.slot_hour/2):@(Model.slot_hour % 2==0 ? "00":"30")</p>
+            </div>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.date_day, "{0:dd.MM.yyyy}", new { @class = "date-picker fullwidth", data_date_format = "0:dd.mm.yyyy", @type = "date" })
+                @Html.ValidationMessageFor(model => model.date_day, "", new { @class = "text-danger" })
+            </div>
+
+            <br />
+
+            <div class="control-label col-md-2">
+                <h6>Pick a slot</h6>
+            </div>
+
+            @for (int i = 15; i < 40; i++)
+            {
+                <span> | @(i/2):@(i%2==0 ? "00":"30") @Html.RadioButtonFor(m => m.slot_hour, i) | </span>
+            }
+            @Html.ValidationMessageFor(m => m.slot_hour, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(m => m.ConsultationID, @Model.ConsultationID)
+            @Html.HiddenFor(m => m.DoctorId, @Model.DoctorId)
+            @Html.HiddenFor(m => m.UserId, @Model.UserId)
+            @Html.HiddenFor(m => m.price, @Model.price)
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-1">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-warning" href="/Consultations">Abort</a>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
