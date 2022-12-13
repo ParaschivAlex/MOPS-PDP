@@ -92,7 +92,7 @@ namespace PDP.Controllers
         }
 
         //
-        // GET: /Account/VerifyCode
+        /* GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -132,7 +132,7 @@ namespace PDP.Controllers
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
             }
-        }
+        }*/
 
         //
         // GET: /Account/Register
@@ -173,7 +173,7 @@ namespace PDP.Controllers
             return View(model);
         }
 
-        //
+        /*
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -184,7 +184,7 @@ namespace PDP.Controllers
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        }
+        }*/
 
         //
         // GET: /Account/ForgotPassword
@@ -272,7 +272,7 @@ namespace PDP.Controllers
             return View();
         }
 
-        //
+        /*
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -384,7 +384,7 @@ namespace PDP.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
-        }
+        }*/
 
         //
         // POST: /Account/LogOff

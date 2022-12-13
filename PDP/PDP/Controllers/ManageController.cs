@@ -108,7 +108,7 @@ namespace PDP.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
+        /*
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
@@ -220,7 +220,7 @@ namespace PDP.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        }
+        }*/
 
         //
         // GET: /Manage/ChangePassword
