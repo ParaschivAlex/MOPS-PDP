@@ -147,6 +147,11 @@ namespace PDP.Tests.Controllers
             Assert.AreEqual(doctorsToAdd[0].FirstName, doctorsDetailsAfterEdit.FirstName);
             Assert.AreNotEqual("Gherasim", doctorsDetailsAfterEdit.FirstName);
 
+            // Get details for the editted specialization
+            ViewResult indexResultForEditShow = doctorsController.Edit(doctorsToAdd[0].DoctorId) as ViewResult;
+            Doctor doctorsEditShow = indexResultForEditShow.ViewData.Model as Doctor;
+            Assert.AreEqual(doctorsEditShow, doctorsToAdd[0]);
+
 
             // ============================= DELETE CREATED DOCTORS ==================================================
             // Now we should check if we can delete the added data
@@ -185,6 +190,9 @@ namespace PDP.Tests.Controllers
             {
                 Assert.IsFalse(indexDataAfterDeleteSpecializations.Contains(specToAdd));
             }
+
+            doctorsController.Dispose();
+            specializationsController.Dispose();
         }
     }
 }

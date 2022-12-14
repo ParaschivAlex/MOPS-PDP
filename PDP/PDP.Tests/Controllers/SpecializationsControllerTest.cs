@@ -109,6 +109,8 @@ namespace PDP.Tests.Controllers
             {
                 Assert.IsFalse(indexDataAfterDelete.Contains(specToAdd));
             }
+
+            specializationsController.Dispose();
         }
     }
 }

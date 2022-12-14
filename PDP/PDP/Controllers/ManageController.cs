@@ -34,9 +34,9 @@ namespace PDP.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -84,7 +84,7 @@ namespace PDP.Controllers
             return View(model);
         }
 
-        
+
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,13 +108,13 @@ namespace PDP.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        /*
+
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
-
+        /*
         //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
@@ -342,7 +342,7 @@ namespace PDP.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -393,6 +393,6 @@ namespace PDP.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace PDP.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +34,9 @@ namespace PDP.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -156,8 +156,8 @@ namespace PDP.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, "User");
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -186,14 +186,14 @@ namespace PDP.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }*/
 
-        /*
+
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
         }
-        
+        /*
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
@@ -221,7 +221,7 @@ namespace PDP.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        
+        */
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -230,7 +230,7 @@ namespace PDP.Controllers
             return View();
         }
 
-        */
+
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -272,7 +272,7 @@ namespace PDP.Controllers
             return View();
         }
 
-        
+
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
