@@ -32,7 +32,7 @@ namespace PDP.Tests.Controllers
 
         // consultation preaprea Area
         ConsultationsController consultationsController = new ConsultationsController();
-        private Consultation consultation = new Consultation { ConsultationID = 9999, price = 100, DoctorId = 1001, UserId ="EMPTY", slot_hour = 10, date_day = System.DateTime.Parse("12/20/2022")};
+        private Consultation consultation = new Consultation { ConsultationID = 9999, price = 100, DoctorId = 1001, UserId ="EMPTY", slot_hour = 10, date_day = System.DateTime.Parse("20/12/2022")};
 
 
         [TestMethod]

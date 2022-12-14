@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PDP.Controllers;
+using System.Data.Entity.Core.Objects;
 using System.Web.Mvc;
 
 namespace PDP.Tests.Controllers
@@ -18,6 +19,7 @@ namespace PDP.Tests.Controllers
 
             //Assert
             Assert.IsNotNull(result);
+            sut.Dispose();
         }
 
         [TestMethod]

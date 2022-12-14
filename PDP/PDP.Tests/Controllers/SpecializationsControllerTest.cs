@@ -23,6 +23,19 @@ namespace PDP.Tests.Controllers
         private SpecializationsController specializationsController = new SpecializationsController();
 
         [TestMethod]
+        public void Create()
+        {
+            //Arrange
+            SpecializationsController sut = new SpecializationsController();
+
+            //Act
+            ViewResult result = sut.Create() as ViewResult;
+
+            //Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
 		public void AllSpecilizationsMethodsTests()
         {
             // Get specializations received by Index when loading
@@ -90,7 +103,11 @@ namespace PDP.Tests.Controllers
                 }
             }
             // If this assert is true the edit was successfull
-            Assert.IsTrue(foundChangedSpecializationEdittedName);            
+            Assert.IsTrue(foundChangedSpecializationEdittedName);
+
+            ViewResult indexResultForEditShow8 = specializationsController.Edit(specializationsToAdd[0].SpecializationID + 500) as ViewResult;
+            int? aux1 = null;
+            ViewResult indexResultForEditShow7 = specializationsController.Edit(aux1) as ViewResult;
 
             // ============================= DELETE TESTS ==================================
             // Now we should check if we can delete the added data

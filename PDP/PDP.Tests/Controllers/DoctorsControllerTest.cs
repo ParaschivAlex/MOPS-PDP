@@ -152,6 +152,13 @@ namespace PDP.Tests.Controllers
             Doctor doctorsEditShow = indexResultForEditShow.ViewData.Model as Doctor;
             Assert.AreEqual(doctorsEditShow, doctorsToAdd[0]);
 
+            ViewResult indexResultForEditShow2 = doctorsController.Edit(doctorsToAdd[0].DoctorId + 700) as ViewResult;
+            int? aux = null;
+            ViewResult indexResultForEditShow3 = doctorsController.Edit(aux) as ViewResult;
+
+            ViewResult indexResultForEditShow4 = doctorsController.Details(doctorsToAdd[0].DoctorId + 600) as ViewResult;
+            int? aux2 = null;
+            ViewResult indexResultForEditShow5 = doctorsController.Details(aux2) as ViewResult;
 
             // ============================= DELETE CREATED DOCTORS ==================================================
             // Now we should check if we can delete the added data

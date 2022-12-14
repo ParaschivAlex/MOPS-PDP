@@ -18,6 +18,7 @@ namespace PDP.Tests.Controllers
 
             //Assert
             Assert.IsNotNull(result);
+            sut.Dispose();
         }
 
         [TestMethod]
