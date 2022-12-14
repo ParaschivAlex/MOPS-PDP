@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,12 +23,14 @@ namespace PDP.Controllers
         {
         }
 
+        [ExcludeFromCodeCoverage]
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationSignInManager SignInManager
         {
             get
@@ -40,6 +43,7 @@ namespace PDP.Controllers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationUserManager UserManager
         {
             get
@@ -54,6 +58,7 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/Index
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
 
@@ -88,6 +93,7 @@ namespace PDP.Controllers
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
@@ -233,6 +239,7 @@ namespace PDP.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -264,6 +271,7 @@ namespace PDP.Controllers
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -287,6 +295,7 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/ManageLogins
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -312,6 +321,7 @@ namespace PDP.Controllers
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
@@ -320,6 +330,7 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/LinkLoginCallback
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PDP.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -10,6 +12,7 @@ namespace PDP.Models
         public string Email { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
@@ -45,6 +48,7 @@ namespace PDP.Models
         public string Email { get; set; }
     }*/
 
+    [ExcludeFromCodeCoverage]
     public class LoginViewModel
     {
         [Required]
@@ -61,6 +65,7 @@ namespace PDP.Models
         public bool RememberMe { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class RegisterViewModel
     {
         [Required]
@@ -89,6 +94,7 @@ namespace PDP.Models
         public string address { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ResetPasswordViewModel
     {
         [Required]

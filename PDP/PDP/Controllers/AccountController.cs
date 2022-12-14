@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -22,12 +23,14 @@ namespace PDP.Controllers
         {
         }
 
+        [ExcludeFromCodeCoverage]
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationSignInManager SignInManager
         {
             get
@@ -40,6 +43,7 @@ namespace PDP.Controllers
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationUserManager UserManager
         {
             get
@@ -66,6 +70,7 @@ namespace PDP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -147,6 +152,7 @@ namespace PDP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -243,6 +249,7 @@ namespace PDP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -277,6 +284,7 @@ namespace PDP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
@@ -321,6 +329,7 @@ namespace PDP.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -353,6 +362,7 @@ namespace PDP.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -390,6 +400,7 @@ namespace PDP.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
