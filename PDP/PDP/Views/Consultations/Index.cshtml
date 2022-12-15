@@ -9,27 +9,30 @@
 <h2>@ViewBag.Title</h2>
 <br />
 
-<h2>Consultations available in the application</h2>
-<br />
-
-<a class="btn btn-primary" href="/Doctors/Index">Add consultation</a>
+<h2>Consultations:</h2>
 <hr />
 <br />
 
+
 @foreach (var consultation in Model)
 {
-    <div style="display: inline-block">
-        <p> Doctor: @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
-        <p> Pret: @consultation.price </p>
-        <p>Date: @consultation.date_day.DayOfWeek, @consultation.date_day.Month/@consultation.date_day.Day/@consultation.date_day.Year</p>
-        <p>Time: @(consultation.slot_hour/2):@(consultation.slot_hour % 2==0 ? "00":"30")</p>
-
+    <div class="row" style="margin-top:10px;">
+        <div class="col-md-10">
+            <div style="display: inline-block">
+                <p> Doctor: @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
+                <p> Price: @consultation.price </p>
+                <p>Date: @consultation.date_day.DayOfWeek, @consultation.date_day.Month/@consultation.date_day.Day/@consultation.date_day.Year</p>
+                <p>Time: @(consultation.slot_hour/2):@(consultation.slot_hour % 2==0 ? "00":"30")</p>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <a class="btn btn-warning" href="/Consultations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>
+        </div>
+            <div class="col-md-1">
+                <form method="post" action="/Consultations/Delete/@consultation.ConsultationID">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+                </form>
+            </div>
     </div>
-    <div style="float: right; height: 100%">
-        <a class="btn btn-success" href="/Consultations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-        <a class="btn btn-danger" href="/Consultations/Delete/@consultation.ConsultationID" style="display: inline-block;">Delete</a>
-    </div>
-    <br />
-    <hr />
-    <br />
 }

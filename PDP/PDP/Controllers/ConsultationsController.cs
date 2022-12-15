@@ -18,9 +18,9 @@ namespace PDP.Controllers
 
         // GET: Consultations
         [Authorize(Roles = "User, Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string userIdDefault = null)
         {
-            string userId = User.Identity.GetUserId();
+            string userId = userIdDefault ?? User.Identity.GetUserId();
 
             IEnumerable<PDP.Models.Consultation> aux = db.Consultations.Where(t => t.User.Id == userId);
             List<Consultation> consultations = aux.ToList();
@@ -29,7 +29,7 @@ namespace PDP.Controllers
 
         // GET: Consultations/Create/{DoctorId}
         [Authorize(Roles = "User, Admin")]
-        public ActionResult Create(int id)
+        public ActionResult Create(int id, string userIdDefault = null)
         {
             var doctor = db.Doctors.Find(id);
             Consultation consultation = new Consultation();
@@ -37,7 +37,7 @@ namespace PDP.Controllers
             consultation.DoctorId = doctor.DoctorId;
             consultation.price = doctor.CalcultateConsultationPrice(db.Specializations.Find(doctor.SpecializationID));
 
-            string userId = User.Identity.GetUserId();
+            string userId = userIdDefault ?? User.Identity.GetUserId();
             consultation.User = db.Users.Single(t => t.Id == userId);
             consultation.UserId = userId;
 
@@ -138,27 +138,8 @@ namespace PDP.Controllers
             return RedirectToAction("Index");
         }
 
-
-        // GET: Consultations/Delete/5
-        [Authorize(Roles = "User, Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Consultation consultation = db.Consultations.Find(id);
-            if (consultation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(consultation);
-        }
-
-
         // POST: Consultations/Delete/{ConsultationID}
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "User, Admin")]
         public ActionResult Delete(int id)
         {

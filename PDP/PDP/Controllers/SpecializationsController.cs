@@ -76,25 +76,8 @@ namespace PDP.Controllers
             return View(specialization);
         }
 
-        // GET: Specializations/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Specialization specialization = db.Specializations.Find(id);
-            if (specialization == null)
-            {
-                return HttpNotFound();
-            }
-            return View(specialization);
-        }
-
         // POST: Specializations/Delete/5
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {

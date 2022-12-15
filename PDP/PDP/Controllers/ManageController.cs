@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,28 +17,33 @@ namespace PDP.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public ManageController()
         {
         }
 
+        [ExcludeFromCodeCoverage]
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationSignInManager SignInManager
         {
             get
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
+        [ExcludeFromCodeCoverage]
         public ApplicationUserManager UserManager
         {
             get
@@ -52,8 +58,10 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/Index
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -64,21 +72,28 @@ namespace PDP.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            var selected_user = db.Users.Single(t => t.Id == userId);
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Address = selected_user.address,
+                City = selected_user.city,
+                Country = selected_user.country
             };
             return View(model);
         }
 
-        //
+
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
@@ -99,13 +114,13 @@ namespace PDP.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
+
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
-
+        /*
         //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
@@ -211,7 +226,7 @@ namespace PDP.Controllers
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
-        }
+        }*/
 
         //
         // GET: /Manage/ChangePassword
@@ -224,6 +239,7 @@ namespace PDP.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
@@ -255,6 +271,7 @@ namespace PDP.Controllers
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -278,6 +295,7 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/ManageLogins
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -303,6 +321,7 @@ namespace PDP.Controllers
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
@@ -311,6 +330,7 @@ namespace PDP.Controllers
 
         //
         // GET: /Manage/LinkLoginCallback
+        [ExcludeFromCodeCoverage]
         public async Task<ActionResult> LinkLoginCallback()
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
@@ -333,7 +353,7 @@ namespace PDP.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +404,6 @@ namespace PDP.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

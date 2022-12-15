@@ -5,7 +5,7 @@
 }
 <script src="~/Scripts/CUSTOM_JS.js"></script>
 
-<h2>Create</h2>
+<h2>Add a booking</h2>
 
 <div class="text-danger">@ViewBag.ConsultationCreateError</div>
 
@@ -14,7 +14,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Specializations</h4>
         <hr />
 
         <p>@ViewBag.firstName @ViewBag.secondName</p>
@@ -51,16 +50,13 @@
 
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-outline-success" />
-            </div>
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Create" class="btn btn-success" />
+				<a class="btn btn-info" href="/Doctors/Index">Back</a>
+			</div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquery")

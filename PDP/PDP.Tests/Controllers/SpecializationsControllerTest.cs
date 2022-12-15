@@ -23,8 +23,25 @@ namespace PDP.Tests.Controllers
         private SpecializationsController specializationsController = new SpecializationsController();
 
         [TestMethod]
-		public void MethodsTest()
+        public void Create()
         {
+            //Arrange
+            SpecializationsController sut = new SpecializationsController();
+
+            //Act
+            ViewResult result = sut.Create() as ViewResult;
+
+            //Assert
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+		public void AllSpecilizationsMethodsTests()
+        {
+            // Get specializations received by Index when loading
+            ViewResult indexResultBeforeCreate = specializationsController.Index() as ViewResult;
+            List<Specialization> indexDataBeforeCreate = indexResultBeforeCreate.ViewData.Model as List<Specialization>;
+
             // ============================= CREATE & INDEX TESTS ==================================
             // Creates the declared specializations and tests if they are received in the view
             // Create specializations
@@ -39,7 +56,7 @@ namespace PDP.Tests.Controllers
 
             // Assert for Index method after creating
             Assert.IsNotNull(indexResult);
-            Assert.AreEqual(specializationsToAdd.Count(), indexData.Count());
+            Assert.AreEqual(specializationsToAdd.Count() + indexDataBeforeCreate.Count(), indexData.Count());
             foreach (Specialization specToAdd in specializationsToAdd)
             {
                 Assert.IsTrue(indexData.Contains(specToAdd));
@@ -74,8 +91,8 @@ namespace PDP.Tests.Controllers
             bool foundChangedSpecializationEdittedName = false;
             // Get all specializations
             ViewResult indexResultAfterEdit = specializationsController.Index() as ViewResult;
-            List<Specialization> indexDataAfterEdit = indexResult.ViewData.Model as List<Specialization>;
-            foreach (Specialization viewSpecialization in indexData)
+            List<Specialization> indexDataAfterEdit = indexResultAfterEdit.ViewData.Model as List<Specialization>;
+            foreach (Specialization viewSpecialization in indexDataAfterEdit)
             {
                 if (specializationsToAdd[1].Name.Equals(viewSpecialization.Name) 
                     && specializationsToAdd[1].Price.Equals(viewSpecialization.Price) 
@@ -86,7 +103,11 @@ namespace PDP.Tests.Controllers
                 }
             }
             // If this assert is true the edit was successfull
-            Assert.IsTrue(foundChangedSpecializationEdittedName);            
+            Assert.IsTrue(foundChangedSpecializationEdittedName);
+
+            ViewResult indexResultForEditShow8 = specializationsController.Edit(specializationsToAdd[0].SpecializationID + 500) as ViewResult;
+            int? aux1 = null;
+            ViewResult indexResultForEditShow7 = specializationsController.Edit(aux1) as ViewResult;
 
             // ============================= DELETE TESTS ==================================
             // Now we should check if we can delete the added data
@@ -97,7 +118,7 @@ namespace PDP.Tests.Controllers
 
             // Get specializations received by Index when loading
             ViewResult indexResultAfterDelete = specializationsController.Index() as ViewResult;
-            List<Specialization> indexDataAfterDelete = indexResult.ViewData.Model as List<Specialization>;
+            List<Specialization> indexDataAfterDelete = indexResultAfterDelete.ViewData.Model as List<Specialization>;
 
             // Assert for Index method after deleting
             Assert.IsNotNull(indexResultAfterDelete);
@@ -105,6 +126,8 @@ namespace PDP.Tests.Controllers
             {
                 Assert.IsFalse(indexDataAfterDelete.Contains(specToAdd));
             }
+
+            specializationsController.Dispose();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PDP.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -10,12 +12,13 @@ namespace PDP.Models
         public string Email { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
     }
 
-    public class SendCodeViewModel
+    /*public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
@@ -38,14 +41,14 @@ namespace PDP.Models
 
         public bool RememberMe { get; set; }
     }
-
     public class ForgotViewModel
     {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+    }*/
 
+    [ExcludeFromCodeCoverage]
     public class LoginViewModel
     {
         [Required]
@@ -62,6 +65,7 @@ namespace PDP.Models
         public bool RememberMe { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class RegisterViewModel
     {
         [Required]
@@ -79,8 +83,18 @@ namespace PDP.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Country")]
+        public string country { get; set; }
+
+        [Display(Name = "City")]
+        public string city { get; set; }
+
+        [Display(Name = "Address")]
+        public string address { get; set; }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ResetPasswordViewModel
     {
         [Required]
@@ -102,11 +116,11 @@ namespace PDP.Models
         public string Code { get; set; }
     }
 
-    public class ForgotPasswordViewModel
+    /*public class ForgotPasswordViewModel
     {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+    }*/
 }

@@ -3,13 +3,13 @@
 @{
     ViewBag.Title = "Doctors";
 }
-
-<h2>Doctors</h2>
+<br />
+<h2>Our doctors</h2>
 <br />
 
 @if (User.IsInRole("Admin"))
 {
-    <a class="btn btn-primary" href="/Doctors/Create">Add a doctor</a>
+    <a class="btn btn-success" href="/Doctors/Create">Add a doctor</a>
     <br />
 }
 <br />
@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-
+<hr/><br />
 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
     @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
     {
@@ -71,7 +71,6 @@
         }
         <div class="panel panel-default">
             <div class="panel-body">
-                <hr />
                 <a href="/Doctors/Details/@doctor.DoctorId">
                     <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
                 </a>
@@ -84,8 +83,9 @@
                 <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
                 <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
                 <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
-                <a class="card-footer" href="/Consultations/Create/@doctor.DoctorId">Add Consultation</a>
+                
             </div>
         </div>
     }
 </div>
+<br/><hr/>

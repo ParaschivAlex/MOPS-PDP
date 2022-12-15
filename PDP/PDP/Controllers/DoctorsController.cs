@@ -17,26 +17,36 @@ namespace PDP.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Doctors
-        [Authorize(Roles = "User, Admin")]
-        public ActionResult Index()
+        public ActionResult Index(String sortOption = "order-by-names", String searchString = "", int selectedOption = -1)
         {
-            ViewBag.selectedOption = -1;
-            ViewBag.searchString = "";
-            ViewBag.sortOption = "order-by-names";
-            if (Request.Params.Get("SelectOption") != null)
+            // Try to get selectedOption from Request
+            ViewBag.selectedOption = selectedOption;
+            ViewBag.searchString = searchString;
+            ViewBag.sortOption = sortOption;
+            try
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SelectOption"));
-                ViewBag.selectedOption = Int32.Parse(Request.Params.Get("SelectOption"));
+                ViewBag.selectedOption = (String.IsNullOrEmpty(Request.Params.Get("SelectOption"))) ? selectedOption : Int32.Parse(Request.Params.Get("SelectOption"));
+            } catch (Exception exception)
+            {
+                ViewBag.selectedOption = selectedOption;
             }
-            if (Request.Params.Get("SearchString") != null)
+            // Try to get searchString from Request
+            try
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SearchString"));
-                ViewBag.searchString = Request.Params.Get("SearchString");
+                ViewBag.searchString = (String.IsNullOrEmpty(Request.Params.Get("SearchString"))) ? searchString : Request.Params.Get("SearchString");
             }
-            if (Request.Params.Get("SortOption") != null)
+            catch (Exception exception)
             {
-                // System.Diagnostics.Debug.WriteLine(Request.Params.Get("SortOption"));
-                ViewBag.sortOption = Request.Params.Get("SortOption");
+                ViewBag.searchString = searchString;
+            }
+            // Try to get sortOption from Request
+            try
+            {
+                ViewBag.sortOption = (String.IsNullOrEmpty(Request.Params.Get("SortOption"))) ? sortOption : Request.Params.Get("SortOption");
+            }
+            catch (Exception exception)
+            {
+                ViewBag.sortOption = sortOption;
             }
             ViewBag.specializations = GetAllSpecializations();
             ViewBag.doctors = new List<Doctor>();
@@ -48,12 +58,10 @@ namespace PDP.Controllers
                 {
                     if (doctor.SpecializationID == specialization.SpecializationID)
                     {
-                        System.Diagnostics.Debug.WriteLine(Request.Params.Get("Founddd"));
                         searchText += specialization.Name;
                         break;
                     }
                 }
-                System.Diagnostics.Debug.WriteLine(Request.Params.Get(searchText));
                 if (searchText.Contains(ViewBag.searchString.ToLowerInvariant()))
                 {
                     if (ViewBag.selectedOption != -1)
@@ -69,21 +77,23 @@ namespace PDP.Controllers
                     }
                 }
             }
-            switch (ViewBag.sortOption)
-            {
-                case "order-by-names":
+            System.Diagnostics.Debug.WriteLine("sortOption : " + sortOption + "   vs   Viewbag sortOption: " + ViewBag.sortOption as string);
+            if (ViewBag.sortOption == "order-by-names")
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
-                    {
-                        return x.FirstName.CompareTo(y.FirstName);
-                    });
-                    break;
-                case "order-by-names-reverse":
+                        {
+                            return x.FirstName.CompareTo(y.FirstName);
+                        });
+                }
+            else if ((ViewBag.sortOption as string).Equals("order-by-names-reverse"))
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         return y.FirstName.CompareTo(x.FirstName);
                     });
-                    break;
-                case "order-by-price":
+                }
+            else if ((ViewBag.sortOption as string).Equals("order-by-price"))
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
@@ -104,8 +114,9 @@ namespace PDP.Controllers
                         yPrice *= y.PriceRate;
                         return xPrice.CompareTo(yPrice);
                     });
-                    break;
-                case "order-by-price-reverse":
+                }
+            else if ((ViewBag.sortOption as string).Equals("order-by-price-reverse"))
+                {
                     ((List<Doctor>)ViewBag.doctors).Sort(delegate (Doctor x, Doctor y)
                     {
                         // TODO: Change it to how we actually calculate the price of a doctor
@@ -126,8 +137,7 @@ namespace PDP.Controllers
                         yPrice *= y.PriceRate;
                         return yPrice.CompareTo(xPrice);
                     });
-                    break;
-            }
+                }
             return View();
         }
 
@@ -205,31 +215,15 @@ namespace PDP.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Doctors/Delete/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
-
         // POST: Doctors/Delete/5
         [HttpDelete]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             Doctor doctor = db.Doctors.Find(id);
             db.Doctors.Remove(doctor);
             db.SaveChanges();
+            TempData["message"] = "The doctor has been deleted!";
             return RedirectToAction("Index");
         }
 
