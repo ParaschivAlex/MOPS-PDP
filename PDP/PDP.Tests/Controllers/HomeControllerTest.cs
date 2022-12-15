@@ -13,32 +13,6 @@ namespace PDP.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
         public void Contact()
         {
             // Arrange
@@ -46,11 +20,11 @@ namespace PDP.Tests.Controllers
 
             // Act
             ViewResult result = controller.Contact() as ViewResult;
-
+            System.Diagnostics.Debug.WriteLine("=====BEFORE=====");
+            System.Diagnostics.Debug.WriteLine(result);
+            System.Diagnostics.Debug.WriteLine("=====AFETR=====");
             // Assert
             Assert.IsNotNull(result);
         }
-
-
     }
 }
