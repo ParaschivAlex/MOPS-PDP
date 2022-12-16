@@ -1,12 +1,4 @@
-﻿@if (TempData.ContainsKey("message"))
-{
-    <h1 class="text-center"> @ViewBag.message&nbsp;</h1>
-    <br />
-}
-
-<h2>@ViewBag.Title</h2>
-
-@if (User.IsInRole("Admin"))
+﻿@if (User.IsInRole("Admin"))
 {
     <a class="btn btn-success justify-content-center" href="/Specializations/Create">Add specialization</a>
     <br />
@@ -14,7 +6,7 @@
     <hr />
 
 }
-@foreach (var specialization in Model)
+@foreach (var specialization in ViewBag.Specializations)
 {
     <div class="row" style="margin-top:10px;">
         <div class="col-md-10">

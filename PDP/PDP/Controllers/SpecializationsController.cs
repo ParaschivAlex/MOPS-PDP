@@ -22,7 +22,8 @@ namespace PDP.Controllers
             ViewBag.Specializations = specializations;
             //System.Diagnostics.Debug.WriteLine("----VIEWBAG SPECIALIZATIONS---");
             //System.Diagnostics.Debug.Write(ViewBag.Specializations);
-            return View();
+            return View(specializations.ToList());
+
         }
 
 
@@ -48,8 +49,56 @@ namespace PDP.Controllers
             }
             catch (Exception)
             {
-                return View();
+                return View(spec);
             }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(int id)
+        {
+            Specialization specialization = db.Specializations.Find(id);
+            return View(specialization);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public ActionResult Edit(int id, Specialization requestSpecialization)
+        {
+            try
+            {
+                Specialization specialization = db.Specializations.Find(id);
+                System.Diagnostics.Debug.WriteLine("---CAUTA PT EDIT----");
+                    System.Diagnostics.Debug.WriteLine("---A FOST GASIT PT EDIT----");
+                    specialization.Name = requestSpecialization.Name;
+                    specialization.Price = requestSpecialization.Price;
+                    db.SaveChanges();
+                    System.Diagnostics.Debug.WriteLine("---A FOST EDITAT----");
+                    TempData["message"] = "The specialization has been modified!";
+                    return RedirectToAction("Index");
+
+            }
+            catch (Exception)
+            {
+                return View(requestSpecialization);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            Specialization specialization = db.Specializations.Find(id);
+            List<int> doctors_to_delete = db.Doctors.Where(fr => fr.SpecializationID == id).Select(f => f.DoctorId).ToList();
+
+            foreach (var doc_del in doctors_to_delete)
+            {
+                Doctor doc = db.Doctors.Find(doc_del);
+                db.Doctors.Remove(doc);
+            }
+            db.Specializations.Remove(specialization);
+            TempData["message"] = "The specialization has been deleted!";
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
