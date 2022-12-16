@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace PDP.Models
 {
@@ -19,6 +20,7 @@ namespace PDP.Models
         [Required(ErrorMessage = "Please pick a specialization!")]
         public int SpecializationID { get; set; }
         public virtual Specialization Specialization { get; set; }
+        public IEnumerable<SelectListItem> SpecializationList { get; set; }
 
 
         // Whether the Doctor can be booked or not

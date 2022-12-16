@@ -50,8 +50,12 @@ namespace PDP.Tests.Controllers
             //Arrange
             SpecializationsController sut = new SpecializationsController();
 
+            ViewResult spec_from_index = specController.Index() as ViewResult; //iau iar toata lista de specializari
+
+            List<Specialization> list_spec_from_index = spec_from_index.ViewData.Model as List<Specialization>; //si o fac lista
+
             //Act
-            ViewResult result = sut.Edit(1) as ViewResult; //incarc pagina de edit si verific sa nu fie null
+            ViewResult result = sut.Edit(list_spec_from_index.LastOrDefault().SpecializationID) as ViewResult; //incarc pagina de edit si verific sa nu fie null
 
             //Assert
             Assert.IsNotNull(result);

@@ -1,113 +1,68 @@
 ﻿@model PDP.Models.Doctor
 
-@{
-    ViewBag.Title = "Create a doctor";
-}
+<h2 class="text-center">Add Doc</h2>
+<br />
 
-
-@using (Html.BeginForm()) 
+@if (TempData.ContainsKey("message"))
 {
-    @Html.AntiForgeryToken()
-    
-    <br/>
-<div class="form-horizontal">
-    <div style="display:inline-block" class="control-label col-md-4">
-        <h2>Add a new doctor...</h2>
-    </div>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>First name</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Second name</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.SecondName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.SecondName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Pick a specialization</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.SpecializationID, new SelectList(ViewBag.specializations, "Value", "Text"),
-                "No specialization selected", new { @class = "form-control" })
-            @Html.ValidationMessage("SpecializationID", "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Can be booked?</h6>
-        </div>
-        <div class="col-md-10">
-            <div class="checkbox">
-                @Html.EditorFor(model => model.IsAvailable)
-                @Html.ValidationMessageFor(model => model.IsAvailable, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Price rate</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PriceRate, new { htmlAttributes = new { @class = "form-control", type = "number", step = "any", min = "0", max = "100", value = "1.0", lang="en-US" } })
-            @Html.ValidationMessageFor(model => model.PriceRate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Phone number</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Email</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">
-            <h6>Photo URL</h6>
-        </div>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-		<div class="col-md-offset-2 col-md-10">
-			<input type="submit" value="Create" class="btn btn-success" />
-				<a class="btn btn-info" href="/Doctors">Back</a>
-		</div>
-    </div>
-</div>
+    <h1 class="text-center"> @ViewBag.message&nbsp;</h1>
+    <br />
 }
-<br/><hr/>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm(actionName: "Create", controllerName: "Doctors"))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-row text-left justify-content-center">
+        <div class="form-group col-md-4">
+            @Html.Label("FirstName", "First Name", new { @class = "text-center" })
+            @Html.ValidationMessageFor(m => m.FirstName, " *", new { @class = "text-danger" })
+            @Html.TextBox("FirstName", null, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.Label("SecondName", "Second Name")
+            @Html.ValidationMessageFor(m => m.SecondName, " *", new { @class = "text-danger" })
+            @Html.TextBox("SecondName", null, new { @class = "form-control" })
+        </div>
+
+
+        <div class="form-group col-md-4">
+            @Html.Label("PhoneNumber", "Phone Number")
+            @Html.ValidationMessageFor(m => m.PhoneNumber, " *", new { @class = "text-danger" })
+            @Html.TextArea("PhoneNumber", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-row text-left justify-content-center">
+        <div class="form-group col-md-4">
+            @Html.Label("PriceRate", "Price Rate")
+            @Html.ValidationMessageFor(m => m.PriceRate, " *", new { @class = "text-danger" })
+            @Html.TextBox("PriceRate", null, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("Email", "Email")
+            @Html.ValidationMessageFor(m => m.Email, " *", new { @class = "text-danger" })
+            @Html.TextBox("Email", null, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.Label("IsAvailable", "Is Available")
+            @Html.ValidationMessageFor(m => m.IsAvailable, " *", new { @class = "text-danger" })
+            @Html.CheckBox("IsAvailable", true, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-row text-left justify-content-center">
+        <div class="form-group col-md-6">
+            @Html.Label("Photo", "Photo")
+            @Html.ValidationMessageFor(m => m.Photo, "", new { @class = "text-danger" })
+            @Html.TextBox("Photo", null, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-6">
+            <label>Select spec</label>@Html.ValidationMessageFor(m => m.SpecializationList, " *", new { @class = "text-danger" })
+            @Html.DropDownListFor(m => m.SpecializationID, new SelectList(Model.SpecializationList, "Value", "Text"), "Select spec", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <button class="btn btn-success justify-content-center" type="submit">Add Doc</button>
+        </div>
+    </div>
 }

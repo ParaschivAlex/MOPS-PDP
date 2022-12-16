@@ -7,64 +7,56 @@
 <h2 class="text-center">Doctor's details page</h2>
 <hr /><br />
 
-@{
-    // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
-    PDP.Models.Specialization currentSpecialization = null;
-    foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
-    {
-        if (Model.SpecializationID == specialization.SpecializationID)
-        {
-            currentSpecialization = new PDP.Models.Specialization
-            {
-                SpecializationID = specialization.SpecializationID,
-                Price = specialization.Price,
-                Name = specialization.Name
-            };
-            break;
-        }
-    }
-	<div class="panel panel-defaul" style="text-align:center">
-		<div class="panel-body">
-			<h3 class="text-center text-primary">@Model.FirstName @Model.SecondName</h3>
-			<img class="img-responsive" src="@Model.Photo" alt="doctor's photo" style="height:16em; margin:auto;" /><br />
-			<br />
-			<h6 style="font-style:italic">Contact number: @Model.PhoneNumber</h6>
-			<div style="text-align:center">
-				<h6>Price for consultation: @Model.CalcultateConsultationPrice(currentSpecialization)  RON</h6>
-				<!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
-				<h6>Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None") </h6>
-			</div>
-			<!--Add a review zone-->
-		</div>
-		<br />
-		<div class="panel-footer">
-			<div class="row text-center" style="margin-top:10px;">
-				<div class="col-md-4">
-					@if (User.IsInRole("Admin"))
-					{
-						<a class="btn btn-warning fa-pull-left" href="/Doctors/Edit/@Model.DoctorId"><i class="fa fa-edit"></i>Edit</a>
+      <div class="card mb-3">
+          <div class="row no-gutters">
+              <div class="col-md-4">
+                  <img class="card-img h-100" src="@Model.Photo" alt="doc image" />
+              </div>
+              <div class="col-md-8 text-center">
+                  <div class="card-body ">
+                      <h2 class="card-title">@Model.FirstName @Model.SecondName</h2>
+                      <h3>@(Model.PriceRate*Model.Specialization.Price) Euro</h3>&nbsp;
+                      
+                      <div class="row text-center" style="margin-top:10px;">
+                          <div class="col-md-4">
+                              @if (User.IsInRole("Admin"))
+                              {<form action="javascript:void(0);">
+                                      <a class="btn btn-warning" href="/Doctors/Edit/@Model.DoctorId">Edit Doctor</a>
+                                  </form>
+                              }
+                          </div>
+                          <div class="col-md-4">
+                              @if (Model.IsAvailable == false)
+                              {
+                                  <form action="javascript:void(0);">
+                                      <button class="btn btn-outline-danger">
+                                          <i class="fa disabled">Doctor unavailable!</i>
+                                      </button>
+                                  </form>
+                              }
+                              @if (Model.IsAvailable == true)
+                              {
+                                  <form method="post" action="/Consultations/Create/@Model.DoctorId">
+                                      <input type="hidden" name="DoctorId" value="@Model.DoctorId" />                                     
+                                      <button type="submit" class="btn btn-success">
+                                          Book a consultation
+                                      </button>
+                                  </form>
+                              }
+                          </div>
+                          <div class="col-md-4">
+                              @if (User.IsInRole("Admin"))
+                              {
+                                  using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorId }))
+                                  {
+                                      @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                      <button class="btn btn-danger" type="submit">Delete</button>
+                                  }
+                              }
+                          </div>
 
-					}
-				</div>
-				<div class="col-md-4">
-					@if (User.IsInRole("User") || User.IsInRole("Admin"))
-					{
-						<a class="btn btn-primary" href="/Consultations/Create/@Model.DoctorId">Add Consultation</a>
-					}
-				</div>
-                <div class="col-md-4">
-                    @if (User.IsInRole("Admin"))
-                    {
-                        using (Html.BeginForm(actionName: "Delete", controllerName: "Doctors", method: FormMethod.Post, routeValues: new { id = @Model.DoctorId }))
-                        {
-                            @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                        }
-                    }
-                </div>
-
-			</div>
-		</div>
-	</div>
-    <br/><hr/>
-}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>

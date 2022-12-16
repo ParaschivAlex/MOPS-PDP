@@ -14,78 +14,43 @@
 }
 <br />
 <div class="row">
-    <div class="col-sm-4">
-        <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get">
-            <button type="submit" class="btn-success">Filter</button>
-            <select class="form-control-sm" id="SelectOption" name="SelectOption">
-                <option value="-1" @(ViewBag.selectedOption == -1 ? "selected" : "")>All specializations</option>
-                @foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
-                {
-                    <option value=@specialization.SpecializationID @(ViewBag.selectedOption == specialization.SpecializationID ? "selected" : "")>@specialization.Name</option>
-                }
-            </select>
-        </form>
+    <div class="col-md-6 mb-3">
+                @Html.ActionLink("Ascend First Name", "Index", new { sortOrder = "1", currentFilter = ViewBag.CurrentFilter }, new { @class = "text-center", @style = "color:black" })
+                @Html.ActionLink("Descend First Name", "Index", new { sortOrder = "2", currentFilter = ViewBag.CurrentFilter }, new { @class = "text-center", @style = "color:black" })
+                @Html.ActionLink("Ascend Second Name", "Index", new { sortOrder = "3", currentFilter = ViewBag.CurrentFilter }, new { @class = "text-center", @style = "color:black" })
+                @Html.ActionLink("Descend Second Name", "Index", new { sortOrder = "4", currentFilter = ViewBag.CurrentFilter }, new { @class = "text-center", @style = "color:black" })
     </div>
-    <div class="col-sm-4">
-        <div class="text-center">
-            <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get">
-                <button type="submit" class="btn-warning">Sort</button>
-                <select class="form-control-sm" id="SortOption" name="SortOption">
-                    <option value="order-by-names" @(ViewBag.sortOption == "order-by-names" ? "selected" : "") >Ascending by names</option>
-                    <option value="order-by-names-reverse" @(ViewBag.sortOption == "order-by-names-reverse" ? "selected" : "")>Descending by names</option>
-                    <option value="order-by-price"  @(ViewBag.sortOption == "order-by-names-price" ? "selected" : "")>Ascending by price</option>
-                    <option value="order-by-price-reverse"  @(ViewBag.sortOption == "order-by-price-reverse" ? "selected" : "")>Descending by price</option>
-                </select>
-            </form>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="float-right">
-            <form class="form-control-sm" asp-controller="Doctors" asp-action="Index" method="get" style="text-align:left">
-                <p>
-                    <input type="text" name="SearchString" placeholder=@(ViewBag.searchString != "" ? ViewBag.searchString : "Enter a keyword") />
-                    <input type="image" alt="Search" src="https://cdn0.iconfinder.com/data/icons/very-basic-2-android-l-lollipop-icon-pack/24/search-512.png" style="height:1.2em;" />
-                </p>
-            </form>
-        </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-right">
+        @using (Html.BeginForm("Index", "Doctors", FormMethod.Get))
+        {
+            @Html.TextBox("search", ViewBag.CurrentFilter as string)
+            <button type="submit" value="Search" class="btn btn-success pull-right fa fa-search">Search</button>
+        }
     </div>
 </div>
-<hr/><br />
-<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
-    @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
+<hr />
+<br />
+
+<div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 row-cols-xl-3">
+    @foreach (PDP.Models.Doctor doctor in ViewBag.Doctors)
     {
-        // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
-        PDP.Models.Specialization currentSpecialization = null;
-        foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
-        {
-            if (doctor.SpecializationID == specialization.SpecializationID)
-            {
-                currentSpecialization = new PDP.Models.Specialization
-                {
-                    SpecializationID = specialization.SpecializationID,
-                    Price = specialization.Price,
-                    Name = specialization.Name
-                };
-                break;
-            }
-        }
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="col mb-4">
+            <div class="card border-secondary mb-3">
                 <a href="/Doctors/Details/@doctor.DoctorId">
-                    <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                    <img class="card-img-top" src="@doctor.Photo" alt="doc image" />
                 </a>
-                <div style="text-align:center">
-                    <a href="/Doctors/Details/@doctor.DoctorId">
-                        <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                <div class="card-body">
+                    <a href="/Doctors/Details/@doctor.DoctorId" style="color:black">
+                        <h3 class="card-title text-center">@doctor.FirstName @doctor.SecondName</h3>
                     </a>
                 </div>
-                <br />
-                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
-                <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
-                <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
-                
             </div>
         </div>
     }
 </div>
-<br/><hr/>
+<br />
+<hr />
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
