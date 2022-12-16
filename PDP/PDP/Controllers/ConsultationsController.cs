@@ -1,12 +1,161 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
+using PDP.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PDP.Controllers
 {
     public class ConsultationsController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Consultations
+        [ExcludeFromCodeCoverage]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Index(string userIdDefault)
+        {
+            string userId = userIdDefault ?? User.Identity.GetUserId();
+
+            IEnumerable<PDP.Models.Consultation> aux = db.Consultations.Where(t => t.User.Id == userId);
+            List<Consultation> consultations = aux.ToList();
+            return View(consultations);
+        }
+
+        // GET: Consultations/Create/{DoctorId}
+        [ExcludeFromCodeCoverage]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Create(int id, string userIdDefault = null)
+        {
+            var doctor = db.Doctors.Find(id);
+            Consultation consultation = new Consultation();
+            consultation.Doctor = doctor;
+            consultation.DoctorId = doctor.DoctorId;
+            consultation.price = doctor.CalcultateConsultationPrice(db.Specializations.Find(doctor.SpecializationID));
+
+            string userId = userIdDefault ?? User.Identity.GetUserId();
+            consultation.User = db.Users.Single(t => t.Id == userId);
+            consultation.UserId = userId;
+
+            return View(consultation);
+        }
+
+        [ExcludeFromCodeCoverage]
+        private bool IsTimeSlotAvailable(Consultation consultation)
+        {
+            var consultations = from com in db.Consultations
+                                where com.DoctorId == consultation.DoctorId &&
+                                com.date_day == consultation.date_day &&
+                                com.slot_hour == consultation.slot_hour
+                                select com;
+
+            if (consultations.Any())
+                return false;
+            else
+                return true;
+        }
+
+        // POST: Consultations/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Create(Consultation consultation)
+        {
+            consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
+            consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ConsultationCreateError = "Model state is not valid...";
+                return View(consultation);
+            }
+
+            if (consultation.date_day <= System.DateTime.Today)
+            {
+                ViewBag.ConsultationCreateError = "You can only make an appointment starting tomorrow...";
+                return View(consultation);
+            }
+
+            if (!IsTimeSlotAvailable(consultation))
+            {
+                ViewBag.ConsultationCreateError = "Selected date and time is not free. Please choose other time slot or date";
+                return View(consultation);
+            }
+
+            db.Consultations.Add(consultation);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Consulation/Edit/5
+        [Authorize(Roles = "Admin")]
+        [ExcludeFromCodeCoverage]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Consultation consulation = db.Consultations.Find(id);
+            if (consulation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(consulation);
+        }
+
+
+        // POST: Consulations/Edit/5
+        [HttpPut]
+        [ValidateAntiForgeryToken]
+        [ExcludeFromCodeCoverage]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(Consultation consultation)
+        {
+            consultation.User = db.Users.Single(t => t.Id == consultation.UserId);
+            consultation.Doctor = db.Doctors.Single(t => t.DoctorId == consultation.DoctorId);
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.ConsultationCreateError = "Model state is not valid...";
+                return View(consultation);
+            }
+
+            if (consultation.date_day <= System.DateTime.Today)
+            {
+                ViewBag.ConsultationCreateError = "You can only make an appointment starting tomorrow...";
+                return View(consultation);
+            }
+
+            if (!IsTimeSlotAvailable(consultation))
+            {
+                ViewBag.ConsultationCreateError = "Selected date and time is not free. Please choose other time slot or date";
+                return View(consultation);
+            }
+
+            db.Entry(consultation).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "User, Admin")]
+        public ActionResult Delete(int id)
+        {
+            Consultation c = db.Consultations.Find(id);
+            db.Consultations.Remove(c);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
