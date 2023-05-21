@@ -17,22 +17,27 @@
 @foreach (var consultation in Model)
 {
     <div class="row" style="margin-top:10px;">
-        <div class="col-md-10">
+        <div class="col-md-10 text-center">
             <div style="display: inline-block">
-                <p> Doctor: @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
-                <p> Price: @consultation.price </p>
-                <p>Date: @consultation.date_day.DayOfWeek, @consultation.date_day.Month/@consultation.date_day.Day/@consultation.date_day.Year</p>
-                <p>Time: @(consultation.slot_hour/2):@(consultation.slot_hour % 2==0 ? "00":"30")</p>
+                <p class="text-center"> Doctor: @consultation.Doctor.FirstName @consultation.Doctor.SecondName</p>
+                <img class="text-center" src="@consultation.Doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                <br />
+                <br />
+                <p class="text-center"> Specialization: @consultation.Doctor.Specialization.Name </p>
+                <p class="text-center"> Price: @consultation.price </p>
+                <p class="text-center">Date: @consultation.date_day.DayOfWeek, @consultation.date_day.Month/@consultation.date_day.Day/@consultation.date_day.Year</p>
+                <p class="text-center">Time: @(consultation.slot_hour/2):@(consultation.slot_hour % 2==0 ? "00":"30")</p>
             </div>
         </div>
         <div class="col-md-1">
             <a class="btn btn-warning" href="/Consultations/Edit/@consultation.ConsultationID" style="display: inline-block; margin-right: 1em;">Edit</a>
         </div>
-            <div class="col-md-1">
-                <form method="post" action="/Consultations/Delete/@consultation.ConsultationID">
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
-                </form>
-            </div>
+        <div class="col-md-1">
+            <form method="post" action="/Consultations/Delete/@consultation.ConsultationID">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
+            </form>
+        </div>
     </div>
+    <hr style="width: 100%; height: 1px; background-color: darkslategrey;">
 }
