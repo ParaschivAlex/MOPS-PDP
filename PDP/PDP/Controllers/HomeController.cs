@@ -22,5 +22,10 @@ namespace PDP.Controllers
         {
             return View();
         }
+
+        public ActionResult Info()
+        {
+            return View();
+        }
     }
 }
