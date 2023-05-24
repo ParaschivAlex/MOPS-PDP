@@ -3,66 +3,84 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/assets")
     @Scripts.Render("~/bundles/modernizr")
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 10px 10px 30px;
+            font-family: "Roboto", sans-serif;
+            color: white;
+            white-space: nowrap;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+            a:hover {
+                -webkit-transform: scale(1.2);
+                color: white;
+            }
+
+        #navbar {
+            padding-top: 30px;
+        }
+    </style>
+
 </head>
-<style>
-body { background: linear-gradient( rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) ); background-image: url('https://img.freepik.com/free-vector/clean-medical-background-vector_53876-140865.jpg?w=1380&t=st=1670630315~exp=1670630915~hmac=0c94813e76a410487fc3362da95f04206fb45cd544817a337afe7c568f880908'); background-size: cover; background-attachment: fixed; background-position: center; }
-a {
-    color: black
-}
-</style>
+
 <body>
-	<nav class="navbar navbar-expand-lg fixed-top navbar-dark" style="background-color: #04281f;">
-		<a class="navbar-brand" href="/Home/Index">PDP Group</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-sm-auto sticky-top order-last order-lg-0" id="navbar" style="background-color:#3fbbc0">
+                <div class="d-flex flex-sm-column flex-row flex-nowrap align-items-center sticky-top" style="background-color:#3fbbc0; text-decoration:none;">
 
-		<div class="navbar-collapse collapse" id="navbarSupportedContent" style="background-color: #04281d; height:5.5vh;">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="/Doctors/Index">Doctors</a></li>
-				<li class="nav-item"><a class="nav-link" href="/Specializations/Index">Specializations</a></li>
+                    <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center text-decoration-none">
+                        <li class="nav-item">
+                            @Html.ActionLink("Acasa", "Index", "Home")
 
-				@if (User.IsInRole("User") || User.IsInRole("Admin"))
-				{
-					<li class="nav-item"><a class="nav-link" href="/Consultations/Index">Your consultations</a></li>
-				}
-			</ul>
-			@Html.Partial("_LoginPartial")
-		</div>
-	</nav>
-	<div class="container body-content responsive">
-		<br />
-		@RenderBody()
+                        </li>
+                        <li class="nav-item"> @Html.ActionLink("Doctori", "Index", "Doctors")</li>
+                        @if (User.IsInRole("Patient"))
+                        {
 
-		<div class="foot">
-			<footer class="text-center bg-light text-dark">
-				<div class="container p-3">
-					<section>
-						<div class="row">
-							<div class="col-lg-4 col-md-4 mb-4 mb-md-0 text-center">
-								<a href="/Home/Index" class="text-uppercase text-center" style="color:black"><strong>Home</strong></a>
-							</div>
-							<div class="col-lg-4 col-md-4 mb-4 mb-md-0">
-								<a href="/Home/About" class="text-uppercase" style="color:black"><strong>About us</strong></a>
-							</div>
-							<div class="col-lg-4 col-md-4 mb-4 mb-md-0">
-								<a href="/Home/Contact" class="text-uppercase" style="color:black"><strong>Contact</strong></a>
-							</div>
-						</div>
-					</section>
+                            <li>@Html.ActionLink("Informatii personale", "Show", "Patients")</li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">@Html.ActionLink("Adaugare specializari", "Create", "Specializations")</li>
+                            <li class="nav-item">@Html.ActionLink("Adaugare Doctor", "Create", "Doctors")</li>
+                        }
+                        <li class="nav-item">@Html.ActionLink("Afisare specializari", "Index", "Specializations")</li>
+                        <li class="nav-item">@Html.ActionLink("Despre noi", "About", "Home")</li>
+                        <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm p-3 min-vh-100">
+                <div class="container body-content">
+                    @RenderBody()
+                    <hr />
+                    <footer>
+                        <p>&copy; @DateTime.Now.Year -MediConnect&trade;</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				</div>
-				<div class="text-center p-2" style="background-color: rgba(0, 0, 0, 0.05);">
-					&copy; @DateTime.Now.Year - <strong>PDP Team</strong>
-				</div>
-			</footer>
-		</div>
-	</div>
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/bootstrap")
-	@RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

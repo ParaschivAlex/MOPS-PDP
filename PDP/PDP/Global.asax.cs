@@ -13,7 +13,6 @@ namespace PDP
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        [ExcludeFromCodeCoverage]
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
