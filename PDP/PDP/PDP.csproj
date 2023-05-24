@@ -325,6 +325,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\Specializations\Create.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -375,8 +376,7 @@
     <Content Include="Views\Doctors\Details.cshtml" />
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\Specializations\Create.cshtml" />
-    <Content Include="Views\Specializations\Details.cshtml" />
+    <Content Include="Views\Specializations\Show.cshtml" />
     <Content Include="Views\Specializations\Edit.cshtml" />
     <Content Include="Views\Specializations\Index.cshtml" />
     <Content Include="Views\Consultations\Index.cshtml" />

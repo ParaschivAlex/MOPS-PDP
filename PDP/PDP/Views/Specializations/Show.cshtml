@@ -1,0 +1,38 @@
+﻿﻿@model PDP.Models.Specialization
+@if (TempData.ContainsKey("message"))
+{
+    <h1 class="text-center"> @ViewBag.message&nbsp;</h1>
+    <br />
+}
+<h2 class="text-center">@Model.Name</h2>
+<br />
+<div class="row row-cols-1 row-cols-lg-1 row-cols-md-1 row-cols-sm-1 row-cols-xl-1 g-1">
+    @foreach (var  doctor in ViewBag.Doctors)
+    {
+
+        <div class="card h-70 border-secondary mb-3" style="background-color:lightblue; border-style:solid; border-width:2px; padding:4px">
+            <div class="row">
+                <div style="text-align:center" class="col-md-3">
+                    <img class="rounded-circle" src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-7 text-center" style="align-items:center; text-align:center">
+                    <br />
+                    <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                    <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @doctor.Specialization.Name</h6>
+                    <br />
+                    <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(@doctor.Specialization) RON</h6>
+                    <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                    <a class="btn btn-info rounded-pill text-center m-auto" style="background-color:deepskyblue; color:white" href="/Consultations/Create/@doctor.DoctorId">Programeaza-te</a>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    }
+</div>
+<br />
+<div class="row text-center">
+    <div class="col-md-12">
+        <a class="btn btn-info justify-content-center" href="/Specializations/Index">Back</a><br />
+    </div>
+</div>

@@ -14,10 +14,46 @@ namespace PDP.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-		// GET: Specializations
-		public ActionResult Index()
+        // GET: Specializations
+        public ActionResult Index()
         {
-            return View(db.Specializations.ToList());
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+            }
+
+            var specs = from spec in db.Specializations
+                             orderby spec.Name
+                             select spec;
+            ViewBag.Specializations = specs;
+            return View();
+        }
+
+        public ActionResult Show(int id)
+        {
+            try
+            {
+                Specialization spec = db.Specializations.Find(id);
+                var docs = from doc in db.Doctors
+                                 where doc.SpecializationID == spec.SpecializationID
+                           select doc;
+                //Console.WriteLine(doc);
+                if (docs != null)
+                {
+                    ViewBag.Specializations = spec;
+                    ViewBag.Doctors = docs;
+                    return View(spec);
+                }
+                else
+                {
+                    throw new NullReferenceException("You can't check a category that has no doctors!");
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = e;
+                return Redirect("/Specializations/Index");
+            }
         }
 
         // GET: Specializations/Create

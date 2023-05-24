@@ -30,10 +30,6 @@
             font-weight: 500;
         }
 
-            a:hover {
-                -webkit-transform: scale(1.2);
-                color: white;
-            }
 
         #navbar {
             padding-top: 30px;
@@ -58,12 +54,14 @@
                         {
 
                             <li>@Html.ActionLink("Informatii personale", "Info", "Home")</li>
+                            <li class="nav-item">@Html.ActionLink("Consultatii", "Index", "Consultations")</li>
                         }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">@Html.ActionLink("Adaugare specializari", "Create", "Specializations")</li>
                             <li class="nav-item">@Html.ActionLink("Adaugare Doctor", "Create", "Doctors")</li>
-                            <li class="nav-item">@Html.ActionLink("Afisare utilizatori", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Informatii personale", "Info", "Home")</li>
+                            <li class="nav-item">@Html.ActionLink("Consultatii", "Index", "Consultations")</li>
                         }
                         <li class="nav-item">@Html.ActionLink("Afisare specializari", "Index", "Specializations")</li>
                         <li class="nav-item">@Html.ActionLink("Despre noi", "About", "Home")</li>
@@ -72,9 +70,11 @@
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
+            <br />
             <div class="col-sm p-3 min-vh-100">
                 <div class="container body-content">
                     @RenderBody()
+                    <br />
                     <hr />
                     <br />
                     <footer>

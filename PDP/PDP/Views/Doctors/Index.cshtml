@@ -4,7 +4,7 @@
     ViewBag.Title = "Doctors";
 }
 <br />
-<h2>Our doctors</h2>
+<h2>MEDICI</h2>
 <br />
 
 @if (User.IsInRole("Admin"))
@@ -51,41 +51,46 @@
     </div>
 </div>
 <hr/><br />
-<div style="display:grid; grid-template-columns: 1fr 1fr 1fr; grid-column-gap: 10px;">
-    @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
-    {
-        // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
-        PDP.Models.Specialization currentSpecialization = null;
-        foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
-        {
-            if (doctor.SpecializationID == specialization.SpecializationID)
-            {
-                currentSpecialization = new PDP.Models.Specialization
-                {
-                    SpecializationID = specialization.SpecializationID,
-                    Price = specialization.Price,
-                    Name = specialization.Name
-                };
-                break;
-            }
-        }
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <a href="/Doctors/Details/@doctor.DoctorId">
-                    <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
-                </a>
-                <div style="text-align:center">
-                    <a href="/Doctors/Details/@doctor.DoctorId">
-                        <img src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
-                    </a>
-                </div>
-                <br />
-                <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
-                <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
-                <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
-                
-            </div>
-        </div>
-    }
-</div>
-<br/><hr/>
+     <div class="row row-cols-1 row-cols-lg-1 row-cols-md-1 row-cols-sm-1 row-cols-xl-1 g-1">
+         @foreach (PDP.Models.Doctor doctor in ViewBag.doctors)
+         {
+             // Getting all specialization in a "Pythonic" way, if other dev knows better you can rewrite this part :)
+             //aveam functie de getallspecializations...
+             PDP.Models.Specialization currentSpecialization = null;
+             foreach (PDP.Models.Specialization specialization in ViewBag.specializations)
+             {
+                 if (doctor.SpecializationID == specialization.SpecializationID)
+                 {
+                     currentSpecialization = new PDP.Models.Specialization
+                     {
+                         SpecializationID = specialization.SpecializationID,
+                         Price = specialization.Price,
+                         Name = specialization.Name
+                     };
+                     break;
+                 }
+             }
+             
+                 <div class="card h-70 border-secondary mb-3" style="background-color:lightblue; border-style:solid; border-width:2px; padding:4px">
+                     <div class="row">
+                         <div style="text-align:center" class="col-md-3">
+                             <a href="Doctors/Details/@doctor.DoctorId">
+                             <img class="rounded-circle" src="@doctor.Photo" alt="doctor's photo" style="height:13em;" />
+                             </a>
+                         </div>
+                         <div class="col-md-1"></div>
+                         <div class="col-md-7 text-center" style="align-items:center; text-align:center">
+                             <br />
+                             <h3 class="text-center text-primary">@doctor.FirstName @doctor.SecondName</h3>
+                             <h6 class="text-center text-primary" style="font-style:italic;">Specialization: @(currentSpecialization != null ? currentSpecialization.Name : "None")</h6>
+                             <br />
+                             <h6 class="text-center text-primary" style="font-style:italic;">Price per consult: @doctor.CalcultateConsultationPrice(currentSpecialization) RON</h6>
+                             <!--Written like this in order to avoid breaking errors in case we delete by mistake a specialization with doctors-->
+                             <a class="btn btn-info rounded-pill text-center m-auto" style="background-color:deepskyblue; color:white" href="/Consultations/Create/@doctor.DoctorId">Programeaza-te</a>
+                         </div>
+                         <div class="col-md-1"></div>
+                     </div>
+                         </div>
+                     }
+                 </div>
+                 <br /><hr />

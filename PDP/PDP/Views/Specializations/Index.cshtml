@@ -1,41 +1,82 @@
-﻿@if (TempData.ContainsKey("message"))
-{
-    <h1 class="text-center"> @ViewBag.message&nbsp;</h1>
-    <br />
-}
+﻿<style>
+    .btn-delete {
+        background-color: red;
+        color: white;
+        border: none;
+        font-size: 16px;
+        font-weight: bold;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 50%;
+    }
 
-<h2>@ViewBag.Title</h2>
-
-@if (User.IsInRole("Admin"))
-{
-    <a class="btn btn-success justify-content-center" href="/Specializations/Create">Add specialization</a>
-    <br />
-    <br />
-    <hr />
-
-}
-@foreach (var specialization in Model)
-{
-    <div class="row" style="margin-top:10px;">
-        <div class="col-md-10">
-            <div style="display: inline-block">
-                <h3>@specialization.Name</h3>
-                <h6>Base price: @specialization.Price</h6>
-            </div>
-        </div>
+        .btn-delete:before {
+            content: "X";
+        }
+</style>
+<div class="row text-center">
+    <div class="col-md-12">
+        <h2>SPECIALIZARI</h2>
         @if (User.IsInRole("Admin"))
         {
-            <div class="col-md-1">
-                <a class="btn btn-warning" href="/Specializations/Edit/@specialization.SpecializationID" style="display: inline-block; margin-right: 1em;">Edit</a>
-            </div>
-            <div class="col-md-1">
-                <form method="post" action="/Specializations/Delete/@specialization.SpecializationID">
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <button class="btn btn-danger justify-content-center" type="submit">Delete</button>
-                </form>
+            <a class="btn btn-info justify-content-center rounded-pill" style="background-color:deepskyblue; color:white" href="/Specializations/Create">ADAUGA SPECIALIZARE</a>
+        }
+    </div>
+</div>
+</br>
+<div class="row row-cols-3 row-cols-lg-3 row-cols-md-3 row-cols-sm-3 row-cols-xl-3 g-3">
+    @if (User.IsInRole("Admin"))
+    {
+        foreach (var spec in ViewBag.Specializations)
+        {
+            <div class="col mb-4">
+                <div class="card h-100 border-secondary mb-3" style="background-color:lightblue; padding">
+                    <a href="/Specializations/Show/@spec.SpecializationID">
+                        <img class="card-img-top" src="https://images.theconversation.com/files/256057/original/file-20190129-108364-17hlc1x.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" alt="spec image" style="height:auto; width:330px" />
+                    </a>
+                    <div style="background-color:dodgerblue">
+                        <h4 class="card-title text-center">@spec.Name</h4>
+                    </div><br />
+                    <div class="text-center">
+                        <p class="card-text">Descriere: Lorem Ipsum</p>
+                    </div>
+                    <br /><hr /><br />
+                                <div class="text-center">
+                                    <form method="post" action="/Specializations/Delete/@spec.SpecializationID">
+                                        @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                        <button class="btn btn-delete" type="submit"></button>
+                                    </form>
+                                </div>
+                    <br />
+                    <div class="list-group-item text-center">
+                        <a class="btn btn-info rounded-pill" href="/Specializations/Edit/@spec.SpecializationID" style="color:white">Edit</a>
+                    </div>
+                </div>
             </div>
         }
-
-    </div>
-<hr />
-}
+    }
+    else
+    {
+        foreach (var spec in ViewBag.Specializations)
+        {
+            <div class="col mb-4">
+                <div class="card h-100 border-secondary mb-3">
+                    <a href="/Specializations/Show/@spec.SpecializationID">
+                        <img class="card-img-top" src="https://images.theconversation.com/files/256057/original/file-20190129-108364-17hlc1x.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" alt="spec image" style="height:150px;" />
+                    </a>
+                    <div class="card-body">
+                        <a href="/Specializations/Show/@spec.SpecializationID" style="color:black">
+                            <h4 class="card-title text-center">@spec.Name</h4>
+                        </a>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item text-center">
+                            <p class="card-text">Descriere: Lorem Ipsum</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+</div>
